@@ -1,11 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Smartphone, Building2, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const UserTypeSelector = () => {
+  const navigate = useNavigate();
+
   const handleCitizenClick = () => {
     // Redirect to Google Play Store for the mobile app
-    window.open("https://play.google.com/store/apps/details?id=com.civicconnect.app", "_blank");
+    window.open(
+      "https://play.google.com/store/apps/details?id=com.civicconnect.app",
+      "_blank"
+    );
   };
 
   const handleCivicBodyClick = () => {
@@ -13,16 +19,24 @@ const UserTypeSelector = () => {
     window.open("https://dashboard.civicconnect.gov", "_blank");
   };
 
+  const handleDashboardClick = () => {
+    navigate("/dashboard");
+  };
+
   return (
-    <section className="w-full py-16 md:py-20 bg-secondary/30">
+    <section
+      id="user-type-selector"
+      className="w-full py-16 md:py-20 bg-secondary/30"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Choose Your Access Type
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Different interfaces designed for different needs. Citizens use our mobile app 
-            for reporting and tracking, while civic bodies access comprehensive analytics and management tools.
+            Different interfaces designed for different needs. Citizens use our
+            mobile app for reporting and tracking, while civic bodies access
+            comprehensive analytics and management tools.
           </p>
         </div>
 
@@ -36,8 +50,9 @@ const UserTypeSelector = () => {
               Citizen Access
             </h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Report civic issues, track progress, view community reports, and engage with 
-              local government through our mobile app. Submit photos, locations, and detailed descriptions easily.
+              Report civic issues, track progress, view community reports, and
+              engage with local government through our mobile app. Submit
+              photos, locations, and detailed descriptions easily.
             </p>
             <ul className="text-sm text-muted-foreground mb-8 space-y-2 text-left">
               <li>• Submit and track issue reports</li>
@@ -46,9 +61,9 @@ const UserTypeSelector = () => {
               <li>• Add supporting evidence to reports</li>
               <li>• Mobile-optimized interface</li>
             </ul>
-            <Button 
+            <Button
               onClick={handleCitizenClick}
-              size="lg" 
+              size="lg"
               className="w-full bg-primary hover:bg-primary-hover text-primary-foreground"
             >
               Download Mobile App
@@ -65,8 +80,9 @@ const UserTypeSelector = () => {
               Civic Body Dashboard
             </h3>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Comprehensive management platform for government agencies. Review reports, 
-              assign teams, track resolution progress, and communicate with citizens transparently.
+              Comprehensive management platform for government agencies. Review
+              reports, assign teams, track resolution progress, and communicate
+              with citizens transparently.
             </p>
             <ul className="text-sm text-muted-foreground mb-8 space-y-2 text-left">
               <li>• Review and prioritize citizen reports</li>
@@ -75,22 +91,32 @@ const UserTypeSelector = () => {
               <li>• Public response and update publishing</li>
               <li>• Data export and reporting tools</li>
             </ul>
-            <Button 
+            <Button
               onClick={handleCivicBodyClick}
-              variant="outline" 
-              size="lg" 
-              className="w-full border-2"
+              variant="outline"
+              size="lg"
+              className="w-full border-2 mb-2"
             >
               Access Dashboard
               <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
+            <Button
+              onClick={handleDashboardClick}
+              size="lg"
+              className="w-full bg-primary text-primary-foreground mt-2"
+            >
+              Dashboard
             </Button>
           </Card>
         </div>
 
         <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground">
-            Need help determining which access type is right for you? 
-            <a href="mailto:support@civicconnect.gov" className="text-primary hover:underline ml-1">
+            Need help determining which access type is right for you?
+            <a
+              href="mailto:support@civicconnect.gov"
+              className="text-primary hover:underline ml-1"
+            >
               Contact our support team
             </a>
           </p>
