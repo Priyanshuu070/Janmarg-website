@@ -2,116 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* Civic Platform Color System - Professional Blues & Greys */
-    --background: 0 0% 100%;
-    --foreground: 214 15% 20%;
+    --background: #ffffff;
+    --brand: #0e7c66;
+    --brand-dark: #0a5d4d;
+    --foreground: #171717;
+    --color-primary: #17725A;
+    --color-primary-dark: #145C49;
+    --muted: #465268;
+    --color-accent: #E6F4F1;
+    --color-success: #D1FADF;
+    --color-warning: #FFE9C3;
+    --color-info: #EAF6FF;
+    --color-surface: #F6F8FA;
+    --color-border: #E5E7EB;
+    --color-text: #1A202C;
+    --color-muted: #6B7280;
+    --color-badge-acknowledged: #FFE9C3;
+    --color-badge-assigned: #D1FADF;
+    --color-badge-resolved: #E6F4F1;
+    --font-family-base: 'Inter', 'Segoe UI', Arial, sans-serif;
 
-    --card: 0 0% 100%;
-    --card-foreground: 214 15% 20%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 214 15% 20%;
-
-    /* Professional Government Blue */
-    --primary: 224 76% 48%;
+    /* Tailwind CSS Variables */
+    --primary: 160 65% 27%; /* #17725A converted to HSL */
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 224 76% 42%;
-
-    /* Clean Grey Secondary */
-    --secondary: 210 20% 98%;
-    --secondary-foreground: 214 15% 25%;
-    --secondary-hover: 210 20% 95%;
-
-    /* Subtle Background Tones */
-    --muted: 210 20% 96%;
-    --muted-foreground: 214 10% 45%;
-
-    /* Trust Accent - Subtle Green */
-    --accent: 142 52% 96%;
-    --accent-foreground: 142 52% 25%;
-    --success: 142 52% 45%;
-
-    --destructive: 0 65% 51%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 214 20% 90%;
-    --input: 214 20% 90%;
-    --ring: 224 76% 48%;
-
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 160 65% 20%;
+    --accent: 160 65% 93%; /* #E6F4F1 converted to HSL */
+    --accent-foreground: 160 65% 20%;
+    --card: 0 0% 97%; /* #F6F8FA */
+    --card-foreground: 215 25% 27%;
+    --border: 220 13% 91%; /* #E5E7EB */
+    --input: 220 13% 91%;
+    --ring: 160 65% 27%;
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 214 25% 9%;
-    --foreground: 210 20% 95%;
-
-    --card: 214 25% 11%;
-    --card-foreground: 210 20% 95%;
-
-    --popover: 214 25% 11%;
-    --popover-foreground: 210 20% 95%;
-
-    --primary: 224 76% 55%;
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: 160 65% 35%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 224 76% 60%;
-
-    --secondary: 214 25% 15%;
+    --secondary: 215 25% 15%;
     --secondary-foreground: 210 20% 85%;
-    --secondary-hover: 214 25% 18%;
-
-    --muted: 214 25% 13%;
-    --muted-foreground: 214 10% 60%;
-
-    --accent: 142 52% 15%;
-    --accent-foreground: 142 52% 85%;
-    --success: 142 52% 55%;
-
-    --destructive: 0 65% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 214 25% 20%;
-    --input: 214 25% 20%;
-    --ring: 224 76% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --accent: 160 65% 15%;
+    --accent-foreground: 160 65% 85%;
+    --card: 215 25% 11%;
+    --card-foreground: 210 20% 95%;
+    --border: 215 25% 20%;
+    --input: 215 25% 20%;
+    --ring: 160 65% 35%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground;
+    font-family: var(--font-family-base);
+    transition: all ease-in-out 300ms, background 0.3s, color 0.3s;
   }
 
   /* Accessibility Focus Styles */

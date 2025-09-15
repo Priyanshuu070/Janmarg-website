@@ -36,28 +36,47 @@ const Dashboard: React.FC = () => {
       case "contractors":
         return (
           <div className="p-6 bg-card rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Contractor Management</h2>
+            <h2 className="text-2xl font-bold mb-4">Contractors</h2>
             <p className="text-muted-foreground">
               Contractor management interface coming soon...
             </p>
           </div>
         );
-      case "analytics":
+      case "export-report":
         return (
           <div className="p-6 bg-card rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Analytics</h2>
-            <p className="text-muted-foreground">
-              Advanced analytics interface coming soon...
-            </p>
-          </div>
-        );
-      case "users":
-        return (
-          <div className="p-6 bg-card rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Users & Roles</h2>
-            <p className="text-muted-foreground">
-              User management interface coming soon...
-            </p>
+            <h2 className="text-2xl font-bold mb-4">Export Report</h2>
+            <div className="space-y-4">
+              <p className="text-muted-foreground">
+                Generate and download comprehensive reports for all city data.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
+                  <h3 className="font-semibold mb-2">Zone Reports</h3>
+                  <p className="text-sm text-muted-foreground">Export all zone data and statistics</p>
+                </button>
+                <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
+                  <h3 className="font-semibold mb-2">Citizen Reports</h3>
+                  <p className="text-sm text-muted-foreground">Download citizen complaint reports</p>
+                </button>
+                <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
+                  <h3 className="font-semibold mb-2">Bidding Reports</h3>
+                  <p className="text-sm text-muted-foreground">Export contract and bidding data</p>
+                </button>
+                <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
+                  <h3 className="font-semibold mb-2">Department Reports</h3>
+                  <p className="text-sm text-muted-foreground">Generate department activity reports</p>
+                </button>
+                <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
+                  <h3 className="font-semibold mb-2">Financial Reports</h3>
+                  <p className="text-sm text-muted-foreground">Export budget and expense reports</p>
+                </button>
+                <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
+                  <h3 className="font-semibold mb-2">Comprehensive Report</h3>
+                  <p className="text-sm text-muted-foreground">Download complete city overview</p>
+                </button>
+              </div>
+            </div>
           </div>
         );
       case "settings":
