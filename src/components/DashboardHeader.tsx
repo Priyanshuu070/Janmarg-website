@@ -3,7 +3,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Bell, Search, MessageSquare, Settings } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { Bell, Search, MessageSquare } from "lucide-react";
 
 interface DashboardHeaderProps {
   userName?: string;
@@ -50,10 +51,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             <MessageSquare className="w-5 h-5" />
           </Button>
 
-          {/* Settings */}
-          <Button variant="ghost" size="icon">
-            <Settings className="w-5 h-5" />
-          </Button>
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
           {/* Profile */}
           <div className="flex items-center gap-3 pl-3 border-l border-border">

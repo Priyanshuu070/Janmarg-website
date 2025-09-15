@@ -104,10 +104,10 @@ const SideNavigation: React.FC<SideNavProps> = ({
     <div
       className={`bg-card border-r border-border transition-all duration-300 ${
         isCollapsed ? "w-16" : "w-64"
-      } min-h-screen`}
+      } h-screen flex flex-col`}
     >
       {/* Header */}
-      <div className="p-4 border-b border-border">
+      <div className="p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center justify-between">
           {!isCollapsed && (
             <div>
@@ -130,8 +130,8 @@ const SideNavigation: React.FC<SideNavProps> = ({
         </div>
       </div>
 
-      {/* Navigation Items */}
-      <nav className="p-2">
+      {/* Navigation Items - Scrollable */}
+      <nav className="p-2 flex-1 overflow-y-auto">
         <div className="space-y-1">
           {navItems.map((item) => {
             const isActive = currentPage === item.id;
@@ -180,21 +180,6 @@ const SideNavigation: React.FC<SideNavProps> = ({
           })}
         </div>
       </nav>
-
-      {/* Footer */}
-      {!isCollapsed && (
-        <div className="absolute bottom-4 left-4 right-4">
-          <div className="p-3 bg-accent rounded-lg">
-            <div className="text-xs text-muted-foreground mb-1">
-              Quick Stats
-            </div>
-            <div className="text-sm font-medium">156 Active Reports</div>
-            <div className="text-xs text-muted-foreground">
-              28 Contractors Online
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

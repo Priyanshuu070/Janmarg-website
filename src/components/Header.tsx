@@ -10,26 +10,28 @@ const Header = () => {
           <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
             <FileText className="w-5 h-5 text-primary-foreground" />
           </div>
-          <span className="text-xl font-semibold text-foreground">CivicConnect</span>
+          <span className="text-xl font-semibold text-foreground">
+            CivicConnect
+          </span>
         </div>
-        
+
         <nav className="hidden md:flex items-center space-x-8">
-          <a 
-            href="#submit" 
+          <a
+            href="#submit"
             className="text-foreground hover:text-primary transition-colors font-medium"
             aria-label="Submit a new civic issue"
           >
             Submit Issue
           </a>
-          <a 
-            href="#reports" 
+          <a
+            href="#reports"
             className="text-foreground hover:text-primary transition-colors font-medium"
             aria-label="View existing reports"
           >
             View Reports
           </a>
-          <a 
-            href="#how-it-works" 
+          <a
+            href="#how-it-works"
             className="text-foreground hover:text-primary transition-colors font-medium"
             aria-label="Learn how the platform works"
           >
@@ -39,7 +41,7 @@ const Header = () => {
 
         <div className="flex items-center space-x-3">
           <ThemeToggle />
-          <Button 
+          <Button
             size="sm"
             className="bg-primary hover:bg-primary-hover text-primary-foreground"
           >
