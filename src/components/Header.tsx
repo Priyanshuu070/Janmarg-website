@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { FileText, Search, HelpCircle } from "lucide-react";
+import { FileText } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Header = () => {
   return (
@@ -37,15 +38,7 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center space-x-3">
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="hidden sm:flex"
-            aria-label="Search existing reports"
-          >
-            <Search className="w-4 h-4 mr-2" />
-            Search
-          </Button>
+          <ThemeToggle />
           <Button 
             size="sm"
             className="bg-primary hover:bg-primary-hover text-primary-foreground"

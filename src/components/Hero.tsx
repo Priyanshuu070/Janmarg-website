@@ -23,18 +23,20 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-primary hover:bg-primary-hover text-primary-foreground text-lg px-8 py-6"
-              aria-label="Submit your first civic issue report"
+              aria-label="Choose your access type to get started"
+              onClick={() => document.getElementById('user-type-selector')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Submit Your First Issue
+              Get Started
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
               className="text-lg px-8 py-6 border-2"
-              aria-label="View existing civic reports in your area"
+              aria-label="Learn how the platform works"
+              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              View Existing Reports
+              Learn How It Works
             </Button>
           </div>
 

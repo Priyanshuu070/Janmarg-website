@@ -1,7 +1,10 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import UserTypeSelector from "@/components/UserTypeSelector";
 import HowItWorks from "@/components/HowItWorks";
 import TrustIndicators from "@/components/TrustIndicators";
+import Features from "@/components/Features";
+import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -10,8 +13,13 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <div id="user-type-selector">
+          <UserTypeSelector />
+        </div>
         <TrustIndicators />
         <HowItWorks />
+        <Features />
+        <FAQ />
       </main>
       <Footer />
     </div>
