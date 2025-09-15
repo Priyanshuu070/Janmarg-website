@@ -63,7 +63,7 @@ const mockOpenReports = [
     zone: "Ranchi Urban",
     estimatedBudget: 200000,
     urgency: "High",
-    deadline: "2024-01-25",
+    deadline: "2025-01-25",
     department: "Roads & Infrastructure",
     bids: [
       {
@@ -75,7 +75,7 @@ const mockOpenReports = [
         experience: "15 years",
         proposal:
           "We will use high-grade asphalt and complete the work during off-peak hours.",
-        submittedDate: "2024-01-18",
+        submittedDate: "2025-01-18",
         warranty: "2 years",
       },
       {
@@ -87,7 +87,7 @@ const mockOpenReports = [
         experience: "12 years",
         proposal:
           "Quick completion with premium materials and traffic management.",
-        submittedDate: "2024-01-19",
+        submittedDate: "2025-01-19",
         warranty: "3 years",
       },
       {
@@ -98,7 +98,7 @@ const mockOpenReports = [
         rating: 3.8,
         experience: "8 years",
         proposal: "Cost-effective solution with standard materials.",
-        submittedDate: "2024-01-17",
+        submittedDate: "2025-01-17",
         warranty: "1 year",
       },
     ],
@@ -111,7 +111,7 @@ const mockOpenReports = [
     zone: "Jamshedpur Industrial",
     estimatedBudget: 360000,
     urgency: "Medium",
-    deadline: "2024-02-05",
+    deadline: "2025-02-05",
     department: "Streetlights",
     bids: [
       {
@@ -122,7 +122,7 @@ const mockOpenReports = [
         rating: 4.7,
         experience: "20 years",
         proposal: "Energy-efficient LED installation with smart controls.",
-        submittedDate: "2024-01-19",
+        submittedDate: "2025-01-19",
         warranty: "5 years",
       },
       {
@@ -133,7 +133,7 @@ const mockOpenReports = [
         rating: 4.1,
         experience: "10 years",
         proposal: "Premium LED system with motion sensors.",
-        submittedDate: "2024-01-20",
+        submittedDate: "2025-01-20",
         warranty: "3 years",
       },
     ],
@@ -146,7 +146,7 @@ const mockOpenReports = [
     zone: "Industrial East",
     estimatedBudget: 640000,
     urgency: "High",
-    deadline: "2024-01-22",
+    deadline: "2025-01-22",
     department: "Water Supply",
     bids: [],
   },

@@ -3,8 +3,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Bell, Search, MessageSquare } from "lucide-react";
+import { Bell, Search, MessageSquare, LogOut, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface DashboardHeaderProps {
   userName?: string;
@@ -13,10 +22,18 @@ interface DashboardHeaderProps {
 }
 
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({
-  userName = "John Administrator",
+  userName = "Rajesh Kumar",
   userRole = "City Manager",
   notificationCount = 5,
 }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Add any logout logic here (clear tokens, etc.)
+    console.log("Logging out...");
+    navigate("/");
+  };
+
   return (
     <header className="bg-background border-b border-border px-6 py-4">
       <div className="flex items-center justify-between">
@@ -54,22 +71,47 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {/* Theme Toggle */}
           <ThemeToggle />
 
-          {/* Profile */}
-          <div className="flex items-center gap-3 pl-3 border-l border-border">
-            <div className="text-right">
-              <p className="text-sm font-medium text-foreground">{userName}</p>
-              <p className="text-xs text-muted-foreground">{userRole}</p>
-            </div>
-            <Avatar className="h-8 w-8">
-              <AvatarImage src="/placeholder-avatar.jpg" alt={userName} />
-              <AvatarFallback className="bg-primary text-primary-foreground">
-                {userName
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")}
-              </AvatarFallback>
-            </Avatar>
-          </div>
+          {/* Profile Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex items-center gap-3 pl-3 border-l border-border hover:bg-accent"
+              >
+                <div className="text-right">
+                  <p className="text-sm font-medium text-foreground">
+                    {userName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{userRole}</p>
+                </div>
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src="/placeholder-avatar.jpg" alt={userName} />
+                  <AvatarFallback className="bg-primary text-primary-foreground">
+                    {userName
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={handleLogout}
+                className="text-red-600 focus:text-red-600"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

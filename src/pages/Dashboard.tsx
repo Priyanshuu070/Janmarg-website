@@ -129,7 +129,7 @@ const Dashboard: React.FC = () => {
         {/* Header - Fixed */}
         <div className="flex-shrink-0">
           <DashboardHeader
-            userName="John Administrator"
+            userName="Rajesh Kumar"
             userRole="City Manager"
             notificationCount={5}
           />

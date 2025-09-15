@@ -353,7 +353,7 @@ const DashboardLogin: React.FC = () => {
             <Shield className="w-3 h-3" />
             <span>Secure Government Portal</span>
           </div>
-          <p>© 2024 Janmarg Portal. All rights reserved.</p>
+          <p>© 2025 Janmarg Portal. All rights reserved.</p>
           <p className="mt-1">Government of Jharkhand</p>
         </div>
       </div>
