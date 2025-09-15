@@ -7,11 +7,8 @@ const UserTypeSelector = () => {
   const navigate = useNavigate();
 
   const handleCitizenClick = () => {
-    // Redirect to Google Play Store for the mobile app
-    window.open(
-      "https://play.google.com/store/apps/details?id=com.civicconnect.app",
-      "_blank"
-    );
+    // Redirect to Janmarg web app
+    window.open("https://janmarg-web.vercel.app/", "_blank");
   };
 
   const handleCivicBodyClick = () => {

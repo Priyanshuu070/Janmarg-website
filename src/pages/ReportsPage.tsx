@@ -191,7 +191,6 @@ const ReportsPage: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold">Reports</h2>
           <p className="text-muted-foreground">
             Monitor and manage citizen reports and service requests
           </p>

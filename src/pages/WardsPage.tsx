@@ -178,7 +178,6 @@ const WardsPage: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold">Wards</h2>
           <p className="text-muted-foreground">
             Manage wards within zones and monitor performance
           </p>

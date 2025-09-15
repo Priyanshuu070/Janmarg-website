@@ -13,14 +13,9 @@ const Hero = () => {
             </span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Serving the people of Jharkhand through accessible governance. A
-            comprehensive platform for transparent civic engagement,
-            accountability, and democratic participation that bridges the gap
-            between Jharkhand government and its citizens.
-          </p>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"></p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
             <Button
               size="lg"
               className="bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground text-lg px-8 py-6 border border-primary/20 hover:border-primary/40 dark:border-primary/30 dark:hover:border-primary/50 transition-all duration-200"

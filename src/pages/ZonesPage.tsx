@@ -145,7 +145,6 @@ const ZonesPage: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-bold">Zones</h2>
           <p className="text-muted-foreground">
             Manage zones, wards, and monitor civic activities
           </p>
