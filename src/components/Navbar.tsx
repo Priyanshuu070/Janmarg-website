@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
                 </Button>
                 <Button
                   variant="ghost"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/login")}
                   className="flex items-center space-x-2"
                 >
                   <Map className="w-4 h-4" />
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
             {isLandingPage && (
               <Button
                 size="sm"
-                className="bg-primary hover:bg-primary-hover text-primary-foreground"
+                className="bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground border border-primary/20 hover:border-primary/40 dark:border-primary/30 dark:hover:border-primary/50 transition-all duration-200"
                 onClick={() => scrollToSection("user-type-selector")}
               >
                 Get Started

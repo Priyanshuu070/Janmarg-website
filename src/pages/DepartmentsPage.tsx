@@ -353,7 +353,7 @@ const DepartmentsPage: React.FC = () => {
                   Annual Budget
                 </span>
                 <span className="font-semibold">
-                  ${department.budget.toLocaleString()}
+                  ₹{department.budget.toLocaleString()}
                 </span>
               </div>
             </div>

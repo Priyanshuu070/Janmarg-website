@@ -23,7 +23,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button
               size="lg"
-              className="bg-primary hover:bg-primary-hover text-primary-foreground text-lg px-8 py-6"
+              className="bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground text-lg px-8 py-6 border border-primary/20 hover:border-primary/40 dark:border-primary/30 dark:hover:border-primary/50 transition-all duration-200"
               aria-label="Choose your access type to get started"
               onClick={() =>
                 document

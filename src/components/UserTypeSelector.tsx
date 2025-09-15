@@ -20,7 +20,7 @@ const UserTypeSelector = () => {
   };
 
   const handleDashboardClick = () => {
-    navigate("/dashboard");
+    navigate("/login");
   };
 
   return (
@@ -92,20 +92,12 @@ const UserTypeSelector = () => {
               <li>• Data export and reporting tools</li>
             </ul>
             <Button
-              onClick={handleCivicBodyClick}
-              variant="outline"
+              onClick={handleDashboardClick}
               size="lg"
-              className="w-full border-2 mb-2"
+              className="w-full bg-primary hover:bg-primary/90 dark:hover:bg-primary/80 text-primary-foreground border border-primary/20 hover:border-primary/40 dark:border-primary/30 dark:hover:border-primary/50 transition-all duration-200"
             >
               Access Dashboard
               <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-            <Button
-              onClick={handleDashboardClick}
-              size="lg"
-              className="w-full bg-primary text-primary-foreground mt-2"
-            >
-              Dashboard
             </Button>
           </Card>
         </div>

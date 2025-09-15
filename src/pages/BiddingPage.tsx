@@ -43,7 +43,7 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
-  DollarSign,
+  DollarSign as RupeeIcon,
   Clock,
   Star,
   FileText,
@@ -61,7 +61,7 @@ const mockOpenReports = [
     description: "Large pothole on Station Road causing traffic issues",
     location: "Station Road & Albert Ekka Chowk",
     zone: "Ranchi Urban",
-    estimatedBudget: 2500,
+    estimatedBudget: 200000,
     urgency: "High",
     deadline: "2024-01-25",
     department: "Roads & Infrastructure",
@@ -69,7 +69,7 @@ const mockOpenReports = [
       {
         id: "BID-001",
         contractor: "Jharkhand Construction Ltd",
-        amount: 2200,
+        amount: 175000,
         timeline: "3 days",
         rating: 4.5,
         experience: "15 years",
@@ -81,7 +81,7 @@ const mockOpenReports = [
       {
         id: "BID-002",
         contractor: "Steel City Infrastructure",
-        amount: 2800,
+        amount: 220000,
         timeline: "2 days",
         rating: 4.2,
         experience: "12 years",
@@ -93,7 +93,7 @@ const mockOpenReports = [
       {
         id: "BID-003",
         contractor: "Ranchi Municipal Works",
-        amount: 1950,
+        amount: 155000,
         timeline: "4 days",
         rating: 3.8,
         experience: "8 years",
@@ -109,7 +109,7 @@ const mockOpenReports = [
     description: "Install new LED streetlights on Bistupur Main Road",
     location: "Bistupur Main Road (Sector 1-3)",
     zone: "Jamshedpur Industrial",
-    estimatedBudget: 4500,
+    estimatedBudget: 360000,
     urgency: "Medium",
     deadline: "2024-02-05",
     department: "Streetlights",
@@ -117,7 +117,7 @@ const mockOpenReports = [
       {
         id: "BID-004",
         contractor: "Tata Power Solutions",
-        amount: 4200,
+        amount: 335000,
         timeline: "5 days",
         rating: 4.7,
         experience: "20 years",
@@ -128,7 +128,7 @@ const mockOpenReports = [
       {
         id: "BID-005",
         contractor: "Jharkhand Electrical Works",
-        amount: 4800,
+        amount: 380000,
         timeline: "4 days",
         rating: 4.1,
         experience: "10 years",
@@ -144,7 +144,7 @@ const mockOpenReports = [
     description: "Emergency water main repair",
     location: "Industrial Park Road",
     zone: "Industrial East",
-    estimatedBudget: 8000,
+    estimatedBudget: 640000,
     urgency: "High",
     deadline: "2024-01-22",
     department: "Water Supply",
@@ -275,7 +275,7 @@ const BiddingPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <DollarSign className={`w-5 h-5 ${getIconColor("neutral")}`} />
+            <RupeeIcon className={`w-5 h-5 ${getIconColor("neutral")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Total Budget</div>
               <div className="text-2xl font-bold">
@@ -325,7 +325,7 @@ const BiddingPage: React.FC = () => {
                 </TableCell>
                 <TableCell>{report.department}</TableCell>
                 <TableCell>
-                  ${report.estimatedBudget.toLocaleString()}
+                  ₹{report.estimatedBudget.toLocaleString()}
                 </TableCell>
                 <TableCell>{getUrgencyBadge(report.urgency)}</TableCell>
                 <TableCell
@@ -394,7 +394,7 @@ const BiddingPage: React.FC = () => {
                   <div>
                     <div className="text-sm text-muted-foreground">Budget</div>
                     <div className="font-medium">
-                      ${selectedReport.estimatedBudget.toLocaleString()}
+                      ₹{selectedReport.estimatedBudget.toLocaleString()}
                     </div>
                   </div>
                   <div>
@@ -492,7 +492,7 @@ const BiddingPage: React.FC = () => {
                                   Bid Amount
                                 </div>
                                 <div className="text-2xl font-bold text-green-600">
-                                  ${bid.amount.toLocaleString()}
+                                  ₹{bid.amount.toLocaleString()}
                                 </div>
                               </div>
                               <div>
