@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { getBadgeColors, getUrgencyFromScore } from "@/lib/badgeColors";
 import ZoneMap from "@/components/ZoneMap";
 import {
   Table,
@@ -49,41 +50,41 @@ import {
 const mockZones = [
   {
     id: 1,
-    name: "Central Business District",
-    code: "CBD-001",
-    wards: 8,
+    name: "Ranchi Urban",
+    code: "RCH-001",
+    wards: 12,
     reports: 156,
-    activeContractors: 12,
+    activeContractors: 15,
     status: "Active",
     urgencyScore: 85,
     color: "#ef4444", // Red for high urgency
   },
   {
     id: 2,
-    name: "Residential North",
-    code: "RN-002",
-    wards: 6,
+    name: "Jamshedpur Industrial",
+    code: "JSR-002",
+    wards: 10,
     reports: 89,
-    activeContractors: 8,
+    activeContractors: 12,
     status: "Active",
     urgencyScore: 65,
     color: "#f59e0b", // Orange for medium urgency
   },
   {
     id: 3,
-    name: "Industrial East",
-    code: "IE-003",
-    wards: 4,
+    name: "Dhanbad Mining",
+    code: "DHN-003",
+    wards: 8,
     reports: 34,
-    activeContractors: 5,
+    activeContractors: 7,
     status: "Active",
     urgencyScore: 40,
     color: "#10b981", // Green for low urgency
   },
   {
     id: 4,
-    name: "Suburban West",
-    code: "SW-004",
+    name: "Bokaro Steel City",
+    code: "BOK-004",
     wards: 10,
     reports: 67,
     activeContractors: 9,
@@ -93,8 +94,8 @@ const mockZones = [
   },
   {
     id: 5,
-    name: "Historic Downtown",
-    code: "HD-005",
+    name: "Hazaribagh Central",
+    code: "HZB-005",
     wards: 5,
     reports: 23,
     activeContractors: 3,
@@ -119,9 +120,12 @@ const ZonesPage: React.FC = () => {
   };
 
   const getUrgencyBadge = (score: number) => {
-    if (score >= 80) return <Badge variant="destructive">High</Badge>;
-    if (score >= 50) return <Badge className="bg-orange-500">Medium</Badge>;
-    return <Badge className="bg-green-500">Low</Badge>;
+    const urgencyText = getUrgencyFromScore(score);
+    return (
+      <Badge className={getBadgeColors.urgency(urgencyText)}>
+        {urgencyText}
+      </Badge>
+    );
   };
 
   const handleAddZone = () => {
@@ -329,16 +333,22 @@ const ZonesPage: React.FC = () => {
           {/* Legend */}
           <div className="mt-4 flex items-center justify-center gap-6">
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-red-500 rounded"></div>
-              <span className="text-sm">High Urgency (80%+)</span>
+              <div className="w-4 h-4 bg-red-600 rounded"></div>
+              <span className="text-sm text-muted-foreground">
+                High Priority (80%+)
+              </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-orange-500 rounded"></div>
-              <span className="text-sm">Medium Urgency (50-79%)</span>
+              <div className="w-4 h-4 bg-amber-600 rounded"></div>
+              <span className="text-sm text-muted-foreground">
+                Medium Priority (50-79%)
+              </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-green-500 rounded"></div>
-              <span className="text-sm">Low Urgency (0-49%)</span>
+              <div className="w-4 h-4 bg-emerald-600 rounded"></div>
+              <span className="text-sm text-muted-foreground">
+                Low Priority (0-49%)
+              </span>
             </div>
           </div>
         </Card>

@@ -3,6 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
+  getBadgeColors,
+  getUrgencyFromScore,
+  getIconColor,
+} from "@/lib/badgeColors";
+import {
   Table,
   TableBody,
   TableCell,
@@ -52,10 +57,10 @@ import {
 const mockOpenReports = [
   {
     id: "RPT-001",
-    title: "Pothole Repair on Main Street",
-    description: "Large pothole on Main Street causing traffic issues",
-    location: "Main Street & 5th Avenue",
-    zone: "Central Business District",
+    title: "Pothole Repair on Station Road",
+    description: "Large pothole on Station Road causing traffic issues",
+    location: "Station Road & Albert Ekka Chowk",
+    zone: "Ranchi Urban",
     estimatedBudget: 2500,
     urgency: "High",
     deadline: "2024-01-25",
@@ -63,7 +68,7 @@ const mockOpenReports = [
     bids: [
       {
         id: "BID-001",
-        contractor: "ABC Construction",
+        contractor: "Jharkhand Construction Ltd",
         amount: 2200,
         timeline: "3 days",
         rating: 4.5,
@@ -75,7 +80,7 @@ const mockOpenReports = [
       },
       {
         id: "BID-002",
-        contractor: "RoadPro Services",
+        contractor: "Steel City Infrastructure",
         amount: 2800,
         timeline: "2 days",
         rating: 4.2,
@@ -87,7 +92,7 @@ const mockOpenReports = [
       },
       {
         id: "BID-003",
-        contractor: "City Repairs Inc",
+        contractor: "Ranchi Municipal Works",
         amount: 1950,
         timeline: "4 days",
         rating: 3.8,
@@ -101,9 +106,9 @@ const mockOpenReports = [
   {
     id: "RPT-002",
     title: "Streetlight Installation",
-    description: "Install new LED streetlights on Elm Street",
-    location: "Elm Street (blocks 1-3)",
-    zone: "Residential North",
+    description: "Install new LED streetlights on Bistupur Main Road",
+    location: "Bistupur Main Road (Sector 1-3)",
+    zone: "Jamshedpur Industrial",
     estimatedBudget: 4500,
     urgency: "Medium",
     deadline: "2024-02-05",
@@ -111,7 +116,7 @@ const mockOpenReports = [
     bids: [
       {
         id: "BID-004",
-        contractor: "Bright Solutions",
+        contractor: "Tata Power Solutions",
         amount: 4200,
         timeline: "5 days",
         rating: 4.7,
@@ -122,7 +127,7 @@ const mockOpenReports = [
       },
       {
         id: "BID-005",
-        contractor: "ElectroWorks",
+        contractor: "Jharkhand Electrical Works",
         amount: 4800,
         timeline: "4 days",
         rating: 4.1,
@@ -156,16 +161,7 @@ const BiddingPage: React.FC = () => {
   const [showNoBidsOnly, setShowNoBidsOnly] = useState(false);
 
   const getUrgencyBadge = (urgency: string) => {
-    switch (urgency) {
-      case "High":
-        return <Badge variant="destructive">High</Badge>;
-      case "Medium":
-        return <Badge className="bg-orange-500">Medium</Badge>;
-      case "Low":
-        return <Badge className="bg-green-500">Low</Badge>;
-      default:
-        return <Badge variant="outline">{urgency}</Badge>;
-    }
+    return <Badge className={getBadgeColors.urgency(urgency)}>{urgency}</Badge>;
   };
 
   const getRatingStars = (rating: number) => {
@@ -242,7 +238,7 @@ const BiddingPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-500" />
+            <FileText className={`w-5 h-5 ${getIconColor("info")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Open Reports</div>
               <div className="text-2xl font-bold">{mockOpenReports.length}</div>
@@ -252,7 +248,7 @@ const BiddingPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <Users className="w-5 h-5 text-green-500" />
+            <Users className={`w-5 h-5 ${getIconColor("success")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Total Bids</div>
               <div className="text-2xl font-bold">
@@ -267,7 +263,7 @@ const BiddingPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-red-500" />
+            <AlertTriangle className={`w-5 h-5 ${getIconColor("error")}`} />
             <div>
               <div className="text-sm text-muted-foreground">No Bids</div>
               <div className="text-2xl font-bold">
@@ -279,7 +275,7 @@ const BiddingPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <DollarSign className="w-5 h-5 text-orange-500" />
+            <DollarSign className={`w-5 h-5 ${getIconColor("neutral")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Total Budget</div>
               <div className="text-2xl font-bold">
@@ -533,7 +529,7 @@ const BiddingPage: React.FC = () => {
                                 onClick={() =>
                                   approveBid(selectedReport.id, bid.id)
                                 }
-                                className="bg-green-600 hover:bg-green-700"
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white"
                               >
                                 <CheckCircle className="w-4 h-4 mr-1" />
                                 Approve

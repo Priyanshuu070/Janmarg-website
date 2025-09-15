@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Badge } from "@/components/ui/badge";
+import { getBadgeColors, getUrgencyFromScore } from "@/lib/badgeColors";
 
 // Fix for default markers in React Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -34,65 +35,68 @@ interface ZoneMapProps {
   onZoneClick?: (zone: Zone) => void;
 }
 
-// Mock coordinates for different zones in a city (using NYC-like coordinates)
+// Mock coordinates for different zones in Jharkhand state
 const mockZoneData = [
   {
     id: 1,
-    coordinates: { lat: 40.7831, lng: -73.9712 }, // Central Manhattan
+    coordinates: { lat: 23.3441, lng: 85.3096 }, // Ranchi Urban
     boundary: [
-      { lat: 40.7731, lng: -73.9812 },
-      { lat: 40.7931, lng: -73.9812 },
-      { lat: 40.7931, lng: -73.9612 },
-      { lat: 40.7731, lng: -73.9612 },
+      { lat: 23.3241, lng: 85.2896 },
+      { lat: 23.3641, lng: 85.2896 },
+      { lat: 23.3641, lng: 85.3296 },
+      { lat: 23.3241, lng: 85.3296 },
     ],
   },
   {
     id: 2,
-    coordinates: { lat: 40.8176, lng: -73.9782 }, // Upper Manhattan
+    coordinates: { lat: 22.8046, lng: 86.2029 }, // Jamshedpur Industrial
     boundary: [
-      { lat: 40.8076, lng: -73.9882 },
-      { lat: 40.8276, lng: -73.9882 },
-      { lat: 40.8276, lng: -73.9682 },
-      { lat: 40.8076, lng: -73.9682 },
+      { lat: 22.7846, lng: 86.1829 },
+      { lat: 22.8246, lng: 86.1829 },
+      { lat: 22.8246, lng: 86.2229 },
+      { lat: 22.7846, lng: 86.2229 },
     ],
   },
   {
     id: 3,
-    coordinates: { lat: 40.7505, lng: -73.9934 }, // Lower East Side
+    coordinates: { lat: 23.7957, lng: 86.4304 }, // Dhanbad Mining
     boundary: [
-      { lat: 40.7405, lng: -74.0034 },
-      { lat: 40.7605, lng: -74.0034 },
-      { lat: 40.7605, lng: -73.9834 },
-      { lat: 40.7405, lng: -73.9834 },
+      { lat: 23.7757, lng: 86.4104 },
+      { lat: 23.8157, lng: 86.4104 },
+      { lat: 23.8157, lng: 86.4504 },
+      { lat: 23.7757, lng: 86.4504 },
     ],
   },
   {
     id: 4,
-    coordinates: { lat: 40.7282, lng: -74.0776 }, // West Side
+    coordinates: { lat: 23.6693, lng: 86.1511 }, // Bokaro Steel City
     boundary: [
-      { lat: 40.7182, lng: -74.0876 },
-      { lat: 40.7382, lng: -74.0876 },
-      { lat: 40.7382, lng: -74.0676 },
-      { lat: 40.7182, lng: -74.0676 },
+      { lat: 23.6493, lng: 86.1311 },
+      { lat: 23.6893, lng: 86.1311 },
+      { lat: 23.6893, lng: 86.1711 },
+      { lat: 23.6493, lng: 86.1711 },
     ],
   },
   {
     id: 5,
-    coordinates: { lat: 40.7614, lng: -73.9776 }, // Midtown
+    coordinates: { lat: 24.4869, lng: 85.3094 }, // Hazaribagh Central
     boundary: [
-      { lat: 40.7514, lng: -73.9876 },
-      { lat: 40.7714, lng: -73.9876 },
-      { lat: 40.7714, lng: -73.9676 },
-      { lat: 40.7514, lng: -73.9676 },
+      { lat: 24.4669, lng: 85.2894 },
+      { lat: 24.5069, lng: 85.2894 },
+      { lat: 24.5069, lng: 85.3294 },
+      { lat: 24.4669, lng: 85.3294 },
     ],
   },
 ];
 
 const ZoneMap: React.FC<ZoneMapProps> = ({ zones, onZoneClick }) => {
   const getUrgencyBadge = (urgency: number) => {
-    if (urgency >= 80) return <Badge variant="destructive">High</Badge>;
-    if (urgency >= 50) return <Badge className="bg-orange-500">Medium</Badge>;
-    return <Badge className="bg-green-500">Low</Badge>;
+    const urgencyText = getUrgencyFromScore(urgency);
+    return (
+      <Badge className={getBadgeColors.urgency(urgencyText)}>
+        {urgencyText}
+      </Badge>
+    );
   };
 
   const getUrgencyColor = (urgency: number) => {
@@ -106,7 +110,7 @@ const ZoneMap: React.FC<ZoneMapProps> = ({ zones, onZoneClick }) => {
     const mockData = mockZoneData.find((mock) => mock.id === zone.id);
     return {
       ...zone,
-      coordinates: mockData?.coordinates || { lat: 40.7128, lng: -73.9851 },
+      coordinates: mockData?.coordinates || { lat: 23.3441, lng: 85.3096 }, // Default to Ranchi
       boundary: mockData?.boundary || [],
     };
   });
@@ -123,7 +127,7 @@ const ZoneMap: React.FC<ZoneMapProps> = ({ zones, onZoneClick }) => {
     <div className="h-96 w-full rounded-lg overflow-hidden border">
       <MapContainer
         center={[centerLat, centerLng]}
-        zoom={12}
+        zoom={8}
         style={{ height: "100%", width: "100%" }}
       >
         <TileLayer

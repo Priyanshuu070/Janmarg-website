@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Home, Map, Settings, HelpCircle, FileText } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import LanguageSelector from "./LanguageSelector";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar: React.FC = () => {
@@ -17,7 +18,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-background border-b border-border sticky top-0 z-50">
+    <nav className="bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/95 border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo and Brand */}
@@ -29,9 +30,7 @@ const Navbar: React.FC = () => {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <FileText className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">
-                CivicConnect
-              </span>
+              <span className="text-xl font-bold text-foreground">Janmarg</span>
             </button>
           </div>
 
@@ -88,8 +87,9 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Theme Toggle and CTA */}
+          {/* Theme Toggle, Language Selector and CTA */}
           <div className="flex items-center space-x-3">
+            <LanguageSelector variant="compact" />
             <ThemeToggle />
             {isLandingPage && (
               <Button

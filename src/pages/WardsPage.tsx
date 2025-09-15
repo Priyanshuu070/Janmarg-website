@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { getBadgeColors, getIconColor } from "@/lib/badgeColors";
 import {
   Table,
   TableBody,
@@ -50,76 +51,76 @@ import {
 const mockZones = [
   {
     id: 1,
-    name: "Central Business District",
-    code: "CBD-001",
+    name: "Ranchi Urban",
+    code: "RCH-001",
     wards: [
       {
-        id: "CBD-W001",
+        id: "RCH-W001",
         wardId: "W001",
         population: 15000,
         reportsPending: 23,
         slaBreaches: 3,
-        assignedOfficer: "John Smith",
-        officerContact: "+1-555-0123",
+        assignedOfficer: "Rajesh Kumar",
+        officerContact: "+91-9876543210",
       },
       {
-        id: "CBD-W002",
+        id: "RCH-W002",
         wardId: "W002",
         population: 18500,
         reportsPending: 31,
         slaBreaches: 5,
-        assignedOfficer: "Sarah Johnson",
-        officerContact: "+1-555-0124",
+        assignedOfficer: "Priya Sharma",
+        officerContact: "+91-9876543211",
       },
       {
-        id: "CBD-W003",
+        id: "RCH-W003",
         wardId: "W003",
         population: 12000,
         reportsPending: 18,
         slaBreaches: 1,
-        assignedOfficer: "Mike Wilson",
-        officerContact: "+1-555-0125",
+        assignedOfficer: "Vikash Singh",
+        officerContact: "+91-9876543212",
       },
     ],
   },
   {
     id: 2,
-    name: "Residential North",
-    code: "RN-002",
+    name: "Jamshedpur Industrial",
+    code: "JSR-002",
     wards: [
       {
-        id: "RN-W001",
+        id: "JSR-W001",
         wardId: "W004",
         population: 22000,
         reportsPending: 15,
         slaBreaches: 2,
-        assignedOfficer: "Emily Davis",
-        officerContact: "+1-555-0126",
+        assignedOfficer: "Sunita Devi",
+        officerContact: "+91-9876543213",
       },
       {
-        id: "RN-W002",
+        id: "JSR-W002",
         wardId: "W005",
         population: 19500,
         reportsPending: 12,
         slaBreaches: 0,
-        assignedOfficer: "David Brown",
-        officerContact: "+1-555-0127",
+        assignedOfficer: "Anil Kumar",
+        officerContact: "+91-9876543214",
       },
     ],
   },
   {
     id: 3,
-    name: "Industrial East",
-    code: "IE-003",
+    name: "Dhanbad Mining",
+    code: "DHN-003",
     wards: [
       {
-        id: "IE-W001",
+        id: "DHN-W001",
         wardId: "W006",
         population: 8500,
         reportsPending: 8,
         slaBreaches: 1,
-        assignedOfficer: "Lisa Anderson",
-        officerContact: "+1-555-0128",
+        assignedOfficer: "Ravi Gupta",
+        officerContact: "+91-9876543215",
       },
     ],
   },
@@ -136,9 +137,23 @@ const WardsPage: React.FC = () => {
   });
 
   const getSLABadge = (breaches: number) => {
-    if (breaches === 0) return <Badge className="bg-green-500">Good</Badge>;
-    if (breaches <= 2) return <Badge className="bg-orange-500">Warning</Badge>;
-    return <Badge variant="destructive">Critical</Badge>;
+    if (breaches === 0) {
+      return (
+        <Badge className={getBadgeColors.systemStatus("good")}>Good</Badge>
+      );
+    }
+    if (breaches <= 2) {
+      return (
+        <Badge className={getBadgeColors.systemStatus("warning")}>
+          Warning
+        </Badge>
+      );
+    }
+    return (
+      <Badge className={getBadgeColors.systemStatus("critical")}>
+        Critical
+      </Badge>
+    );
   };
 
   const handleAddWard = () => {
@@ -281,7 +296,7 @@ const WardsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <Users className="w-5 h-5 text-blue-500" />
+            <Users className={`w-5 h-5 ${getIconColor("info")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Total Wards</div>
               <div className="text-2xl font-bold">
@@ -293,7 +308,7 @@ const WardsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <Users className="w-5 h-5 text-green-500" />
+            <Users className={`w-5 h-5 ${getIconColor("success")}`} />
             <div>
               <div className="text-sm text-muted-foreground">
                 Total Population
@@ -309,7 +324,7 @@ const WardsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-orange-500" />
+            <FileText className={`w-5 h-5 ${getIconColor("warning")}`} />
             <div>
               <div className="text-sm text-muted-foreground">
                 Pending Reports
@@ -326,7 +341,7 @@ const WardsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-red-500" />
+            <AlertTriangle className={`w-5 h-5 ${getIconColor("error")}`} />
             <div>
               <div className="text-sm text-muted-foreground">SLA Breaches</div>
               <div className="text-2xl font-bold">

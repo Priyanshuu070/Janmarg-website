@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Badge } from "@/components/ui/badge";
+import { getBadgeColors } from "@/lib/badgeColors";
 
 // Fix for default markers in React Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -41,29 +42,11 @@ const ReportsOverviewMap: React.FC<ReportsOverviewMapProps> = ({
   onReportClick,
 }) => {
   const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "Pending":
-        return <Badge variant="secondary">Pending</Badge>;
-      case "In-Progress":
-        return <Badge className="bg-blue-500">In Progress</Badge>;
-      case "Resolved":
-        return <Badge className="bg-green-500">Resolved</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
+    return <Badge className={getBadgeColors.status(status)}>{status}</Badge>;
   };
 
   const getUrgencyBadge = (urgency: string) => {
-    switch (urgency) {
-      case "High":
-        return <Badge variant="destructive">High</Badge>;
-      case "Medium":
-        return <Badge className="bg-orange-500">Medium</Badge>;
-      case "Low":
-        return <Badge className="bg-green-500">Low</Badge>;
-      default:
-        return <Badge variant="outline">{urgency}</Badge>;
-    }
+    return <Badge className={getBadgeColors.urgency(urgency)}>{urgency}</Badge>;
   };
 
   // Create custom marker icon based on urgency and status

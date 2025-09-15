@@ -53,27 +53,39 @@ const Dashboard: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
                   <h3 className="font-semibold mb-2">Zone Reports</h3>
-                  <p className="text-sm text-muted-foreground">Export all zone data and statistics</p>
+                  <p className="text-sm text-muted-foreground">
+                    Export all zone data and statistics
+                  </p>
                 </button>
                 <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
                   <h3 className="font-semibold mb-2">Citizen Reports</h3>
-                  <p className="text-sm text-muted-foreground">Download citizen complaint reports</p>
+                  <p className="text-sm text-muted-foreground">
+                    Download citizen complaint reports
+                  </p>
                 </button>
                 <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
                   <h3 className="font-semibold mb-2">Bidding Reports</h3>
-                  <p className="text-sm text-muted-foreground">Export contract and bidding data</p>
+                  <p className="text-sm text-muted-foreground">
+                    Export contract and bidding data
+                  </p>
                 </button>
                 <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
                   <h3 className="font-semibold mb-2">Department Reports</h3>
-                  <p className="text-sm text-muted-foreground">Generate department activity reports</p>
+                  <p className="text-sm text-muted-foreground">
+                    Generate department activity reports
+                  </p>
                 </button>
                 <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
                   <h3 className="font-semibold mb-2">Financial Reports</h3>
-                  <p className="text-sm text-muted-foreground">Export budget and expense reports</p>
+                  <p className="text-sm text-muted-foreground">
+                    Export budget and expense reports
+                  </p>
                 </button>
                 <button className="p-4 border rounded-lg hover:bg-accent transition-colors">
                   <h3 className="font-semibold mb-2">Comprehensive Report</h3>
-                  <p className="text-sm text-muted-foreground">Download complete city overview</p>
+                  <p className="text-sm text-muted-foreground">
+                    Download complete city overview
+                  </p>
                 </button>
               </div>
             </div>
@@ -135,7 +147,7 @@ const Dashboard: React.FC = () => {
               </h1>
               <p className="text-muted-foreground">
                 {currentPage === "dashboard"
-                  ? "Welcome to your civic management dashboard"
+                  ? "Welcome to your Janmarg governance dashboard"
                   : `Manage ${currentPage} efficiently`}
               </p>
             </div>

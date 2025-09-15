@@ -7,34 +7,43 @@ const Hero = () => {
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Report, Track, and Resolve 
-            <span className="text-primary block md:inline md:ml-3">
-              Civic Issues Transparently
+            Janmarg - Jan Accessible Network
+            <span className="text-primary block">
+              for Mobilization Accountability, Reform & Governance
             </span>
           </h1>
-          
+
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Empower your community through transparent civic engagement. 
-            Citizens and government bodies working together to identify, 
-            track, and resolve issues that matter to everyone.
+            Serving the people of Jharkhand through accessible governance. A
+            comprehensive platform for transparent civic engagement,
+            accountability, and democratic participation that bridges the gap
+            between Jharkhand government and its citizens.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-primary hover:bg-primary-hover text-primary-foreground text-lg px-8 py-6"
               aria-label="Choose your access type to get started"
-              onClick={() => document.getElementById('user-type-selector')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document
+                  .getElementById("user-type-selector")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               Get Started
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
+            <Button
+              variant="outline"
+              size="lg"
               className="text-lg px-8 py-6 border-2"
               aria-label="Learn how the platform works"
-              onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document
+                  .getElementById("how-it-works")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
             >
               Learn How It Works
             </Button>
@@ -49,7 +58,8 @@ const Hero = () => {
                 Transparent Process
               </h3>
               <p className="text-muted-foreground">
-                Every report is publicly visible with real-time status updates and government responses.
+                Every report is publicly visible with real-time status updates
+                and government responses.
               </p>
             </div>
 
@@ -61,7 +71,8 @@ const Hero = () => {
                 Community Driven
               </h3>
               <p className="text-muted-foreground">
-                Citizens can support reports, add evidence, and track resolution progress together.
+                Citizens can support reports, add evidence, and track resolution
+                progress together.
               </p>
             </div>
 
@@ -73,7 +84,8 @@ const Hero = () => {
                 Accountable Results
               </h3>
               <p className="text-muted-foreground">
-                Government bodies respond directly with action plans and completion timelines.
+                Government bodies respond directly with action plans and
+                completion timelines.
               </p>
             </div>
           </div>

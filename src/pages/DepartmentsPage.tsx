@@ -4,6 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
+  getBadgeColors,
+  getPerformanceText,
+  getIconColor,
+} from "@/lib/badgeColors";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -143,12 +148,12 @@ const DepartmentsPage: React.FC = () => {
   });
 
   const getSLABadge = (performance: number) => {
-    if (performance >= 90)
-      return <Badge className="bg-green-500">Excellent</Badge>;
-    if (performance >= 80) return <Badge className="bg-blue-500">Good</Badge>;
-    if (performance >= 70)
-      return <Badge className="bg-orange-500">Average</Badge>;
-    return <Badge variant="destructive">Poor</Badge>;
+    const performanceText = getPerformanceText(performance);
+    return (
+      <Badge className={getBadgeColors.performance(performance)}>
+        {performanceText}
+      </Badge>
+    );
   };
 
   const handleAddDepartment = () => {
@@ -379,7 +384,7 @@ const DepartmentsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <Building className="w-5 h-5 text-blue-500" />
+            <Building className={`w-5 h-5 ${getIconColor("info")}`} />
             <div>
               <div className="text-sm text-muted-foreground">
                 Total Departments
@@ -391,7 +396,7 @@ const DepartmentsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-orange-500" />
+            <FileText className={`w-5 h-5 ${getIconColor("warning")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Total Reports</div>
               <div className="text-2xl font-bold">
@@ -406,7 +411,7 @@ const DepartmentsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <Users className="w-5 h-5 text-green-500" />
+            <Users className={`w-5 h-5 ${getIconColor("success")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Total Staff</div>
               <div className="text-2xl font-bold">
@@ -421,7 +426,7 @@ const DepartmentsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-red-500" />
+            <AlertTriangle className={`w-5 h-5 ${getIconColor("error")}`} />
             <div>
               <div className="text-sm text-muted-foreground">
                 Pending Approvals

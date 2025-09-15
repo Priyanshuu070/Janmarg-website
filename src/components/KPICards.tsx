@@ -126,7 +126,7 @@ const KPICards: React.FC = () => {
             </div>
             <div className="w-full bg-secondary rounded-full h-2">
               <div
-                className="bg-orange-500 h-2 rounded-full"
+                className="bg-amber-600 h-2 rounded-full"
                 style={{
                   width: `${kpiData.pendingVsResolved.pendingPercentage}%`,
                 }}
@@ -189,7 +189,7 @@ const KPICards: React.FC = () => {
             </div>
             <div className="w-full bg-secondary rounded-full h-2">
               <div
-                className="bg-green-500 h-2 rounded-full"
+                className="bg-emerald-600 h-2 rounded-full"
                 style={{ width: `${kpiData.contractors.activePercentage}%` }}
               />
             </div>

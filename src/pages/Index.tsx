@@ -11,7 +11,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main>
+      <main className="bg-background">
         <Hero />
         <div id="user-type-selector">
           <UserTypeSelector />

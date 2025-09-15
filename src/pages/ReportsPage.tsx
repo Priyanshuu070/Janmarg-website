@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { getBadgeColors, getIconColor } from "@/lib/badgeColors";
 import ReportMap from "@/components/ReportMap";
 import {
   Table,
@@ -57,77 +58,77 @@ import {
 const mockReports = [
   {
     id: "RPT-001",
-    citizen: "John Doe",
-    citizenContact: "+1-555-0101",
+    citizen: "Rajesh Kumar",
+    citizenContact: "+91-9876543210",
     issueType: "Pothole",
     department: "Roads & Infrastructure",
-    zone: "Central Business District",
-    ward: "CBD-W001",
+    zone: "Ranchi Urban",
+    ward: "RCH-W001",
     status: "In-Progress",
     urgency: "High",
     created: "2024-01-15",
     slaDeadline: "2024-01-20",
-    description: "Large pothole on Main Street causing traffic issues",
-    location: "Main Street & 5th Avenue",
-    coordinates: { lat: 40.7128, lng: -74.006 },
+    description: "Large pothole on Station Road causing traffic issues",
+    location: "Station Road & Albert Ekka Chowk",
+    coordinates: { lat: 23.3441, lng: 85.3096 },
     photos: ["photo1.jpg"],
-    assignedContractor: "ABC Construction",
+    assignedContractor: "Jharkhand Construction Ltd",
     estimatedCost: 2500,
   },
   {
     id: "RPT-002",
-    citizen: "Sarah Johnson",
-    citizenContact: "+1-555-0102",
+    citizen: "Priya Sharma",
+    citizenContact: "+91-9876543211",
     issueType: "Streetlight Outage",
     department: "Streetlights",
-    zone: "Residential North",
-    ward: "RN-W001",
+    zone: "Jamshedpur Industrial",
+    ward: "JSR-W001",
     status: "Pending",
     urgency: "Medium",
     created: "2024-01-16",
     slaDeadline: "2024-01-21",
-    description: "Multiple streetlights not working on Elm Street",
-    location: "Elm Street (blocks 1-3)",
-    coordinates: { lat: 40.758, lng: -73.9855 },
+    description: "Multiple streetlights not working on Bistupur Main Road",
+    location: "Bistupur Main Road (Sector 1-3)",
+    coordinates: { lat: 22.8046, lng: 86.2029 },
     photos: ["photo2.jpg", "photo3.jpg"],
     assignedContractor: null,
     estimatedCost: 1200,
   },
   {
     id: "RPT-003",
-    citizen: "Mike Wilson",
-    citizenContact: "+1-555-0103",
+    citizen: "Vikash Singh",
+    citizenContact: "+91-9876543212",
     issueType: "Water Leak",
     department: "Water Supply",
-    zone: "Industrial East",
-    ward: "IE-W001",
+    zone: "Dhanbad Mining",
+    ward: "DHN-W001",
     status: "Resolved",
     urgency: "High",
     created: "2024-01-10",
     slaDeadline: "2024-01-15",
     description: "Major water leak causing flooding",
-    location: "Industrial Park Road",
-    coordinates: { lat: 40.6892, lng: -74.0445 },
+    location: "Coal Mines Area Road",
+    coordinates: { lat: 23.7957, lng: 86.4304 },
     photos: ["photo4.jpg"],
-    assignedContractor: "PlumbTech Solutions",
+    assignedContractor: "Jharkhand Water Solutions",
     estimatedCost: 4500,
     resolvedDate: "2024-01-14",
   },
   {
     id: "RPT-004",
-    citizen: "Emily Davis",
-    citizenContact: "+1-555-0104",
+    citizen: "Sunita Devi",
+    citizenContact: "+91-9876543213",
     issueType: "Garbage Collection",
     department: "Sanitation",
-    zone: "Residential North",
-    ward: "RN-W002",
+    zone: "Bokaro Steel City",
+    ward: "BOK-W001",
     status: "Pending",
     urgency: "Low",
     created: "2024-01-17",
     slaDeadline: "2024-01-24",
     description: "Missed garbage collection for 3 days",
-    location: "Oak Avenue, Sector 5",
-    coordinates: { lat: 40.7589, lng: -73.9851 },
+    location: "Sector 4, Steel City Area",
+    coordinates: { lat: 23.6693, lng: 86.1511 },
     photos: [],
     assignedContractor: null,
     estimatedCost: 0,
@@ -145,29 +146,11 @@ const ReportsPage: React.FC = () => {
   const [showDetailDialog, setShowDetailDialog] = useState(false);
 
   const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "Pending":
-        return <Badge variant="secondary">Pending</Badge>;
-      case "In-Progress":
-        return <Badge className="bg-blue-500">In Progress</Badge>;
-      case "Resolved":
-        return <Badge className="bg-green-500">Resolved</Badge>;
-      default:
-        return <Badge variant="outline">{status}</Badge>;
-    }
+    return <Badge className={getBadgeColors.status(status)}>{status}</Badge>;
   };
 
   const getUrgencyBadge = (urgency: string) => {
-    switch (urgency) {
-      case "High":
-        return <Badge variant="destructive">High</Badge>;
-      case "Medium":
-        return <Badge className="bg-orange-500">Medium</Badge>;
-      case "Low":
-        return <Badge className="bg-green-500">Low</Badge>;
-      default:
-        return <Badge variant="outline">{urgency}</Badge>;
-    }
+    return <Badge className={getBadgeColors.urgency(urgency)}>{urgency}</Badge>;
   };
 
   const filteredReports = mockReports.filter((report) => {
@@ -536,9 +519,11 @@ const ReportsPage: React.FC = () => {
 
                       {selectedReport.status === "Resolved" &&
                         selectedReport.resolvedDate && (
-                          <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                          <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg">
                             <div className="flex items-center gap-2 text-sm">
-                              <CheckCircle className="w-4 h-4 text-green-600" />
+                              <CheckCircle
+                                className={`w-4 h-4 ${getIconColor("success")}`}
+                              />
                               <span className="font-medium">
                                 Report Resolved
                               </span>
@@ -564,7 +549,7 @@ const ReportsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-500" />
+            <FileText className={`w-5 h-5 ${getIconColor("info")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Total Reports</div>
               <div className="text-2xl font-bold">{mockReports.length}</div>
@@ -574,7 +559,7 @@ const ReportsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-orange-500" />
+            <Clock className={`w-5 h-5 ${getIconColor("warning")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Pending</div>
               <div className="text-2xl font-bold">
@@ -586,7 +571,7 @@ const ReportsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-green-500" />
+            <CheckCircle className={`w-5 h-5 ${getIconColor("success")}`} />
             <div>
               <div className="text-sm text-muted-foreground">Resolved</div>
               <div className="text-2xl font-bold">
@@ -598,7 +583,7 @@ const ReportsPage: React.FC = () => {
 
         <Card className="p-4">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-red-500" />
+            <AlertTriangle className={`w-5 h-5 ${getIconColor("error")}`} />
             <div>
               <div className="text-sm text-muted-foreground">SLA Breaches</div>
               <div className="text-2xl font-bold">
