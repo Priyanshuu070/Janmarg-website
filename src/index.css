@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --brand: #0e7c66;
+    --brand-dark: #0a5d4d;
+    --foreground: #171717;
+    --color-primary: #17725a;
+    --color-primary-dark: #145c49;
+    --muted: #465268;
+    --color-accent: #e6f4f1;
+    --color-success: #d1fadf;
+    --color-warning: #ffe9c3;
+    --color-info: #eaf6ff;
+    --color-surface: #f6f8fa;
+    --color-border: #e5e7eb;
+    --color-text: #1a202c;
+    --color-muted: #6b7280;
+    --color-badge-acknowledged: #ffe9c3;
+    --color-badge-assigned: #d1fadf;
+    --color-badge-resolved: #e6f4f1;
+    --font-family-base: "Inter", "Segoe UI", Arial, sans-serif;
+
+    /* Tailwind CSS Variables */
+    --primary: 160 65% 27%; /* #17725A converted to HSL */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 160 65% 20%;
+    --accent: 160 65% 93%; /* #E6F4F1 converted to HSL */
+    --accent-foreground: 160 65% 20%;
+    --card: 0 0% 97%; /* #F6F8FA */
+    --card-foreground: 215 25% 27%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 27%;
+    --border: 220 13% 91%; /* #E5E7EB */
+    --input: 220 13% 91%;
+    --ring: 160 65% 27%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: 160 65% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 25% 15%;
+    --secondary-foreground: 210 20% 85%;
+    --accent: 160 65% 15%;
+    --accent-foreground: 160 65% 85%;
+    --card: 215 25% 11%;
+    --card-foreground: 210 20% 95%;
+    --popover: 215 25% 11%;
+    --popover-foreground: 210 20% 95%;
+    --border: 215 25% 20%;
+    --input: 215 25% 20%;
+    --ring: 160 65% 35%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-family-base);
+    transition: all ease-in-out 300ms, background 0.3s, color 0.3s;
+  }
+
+  /* Accessibility Focus Styles */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  /* Smooth Transitions for Professional Feel */
+  button,
+  a,
+  [role="button"] {
+    @apply transition-colors duration-200 ease-in-out;
+  }
+}
