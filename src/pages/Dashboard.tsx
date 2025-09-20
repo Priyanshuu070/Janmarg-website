@@ -17,9 +17,14 @@ const Dashboard: React.FC = () => {
     switch (currentPage) {
       case "dashboard":
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
+            {/* Hero Section - Enhanced KPI Cards */}
             <KPICards />
+            
+            {/* Secondary Analytics Widgets */}
             <DashboardCharts />
+            
+            {/* Recent Activity Feed */}
             <RecentActivityFeed />
           </div>
         );
@@ -35,7 +40,7 @@ const Dashboard: React.FC = () => {
         return <BiddingPage />;
       case "contractors":
         return (
-          <div className="p-6 bg-card rounded-lg">
+          <div className="p-6 bg-white rounded-lg">
             <h2 className="text-2xl font-bold mb-4">Contractors</h2>
             <p className="text-muted-foreground">
               Contractor management interface coming soon...
@@ -115,7 +120,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-secondary overflow-hidden">
+    <div className="flex h-screen bg-background overflow-hidden">
       {/* Side Navigation - Fixed */}
       <div className="flex-shrink-0">
         <SideNavigation
@@ -131,7 +136,7 @@ const Dashboard: React.FC = () => {
           <DashboardHeader
             userName="Rajesh Kumar"
             userRole="City Manager"
-            notificationCount={5}
+            notificationCount={13}
           />
         </div>
 
@@ -139,18 +144,6 @@ const Dashboard: React.FC = () => {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="max-w-7xl mx-auto">
             {/* Page Title */}
-            <div className="mb-6">
-              <h1 className="text-3xl font-bold text-foreground">
-                {currentPage === "dashboard"
-                  ? "Dashboard Overview"
-                  : currentPage.charAt(0).toUpperCase() + currentPage.slice(1)}
-              </h1>
-              <p className="text-muted-foreground">
-                {currentPage === "dashboard"
-                  ? "Welcome to your Janmarg governance dashboard"
-                  : `Manage ${currentPage} efficiently`}
-              </p>
-            </div>
 
             {/* Dynamic Content */}
             {renderPageContent()}

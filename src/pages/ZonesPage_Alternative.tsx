@@ -5,6 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { getBadgeColors, getUrgencyFromScore } from "@/lib/badgeColors";
 import ZoneMap from "@/components/ZoneMap";
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -21,48 +29,34 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   Plus,
   MapPin,
   Download,
   Edit,
   Eye,
   Trash2,
+  MoreHorizontal,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
-import { DataGrid, GridColDef, GridActionsCellItem, GridRowId } from '@mui/x-data-grid';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CSVLink } from 'react-csv';
 import { toast } from "sonner";
 
 // Import wards data and process into zones
 import { wardsCSVData, parseCSV, processWardsIntoZones, Ward, Zone } from '@/utils/wardsData';
 
-// Create MUI theme for DataGrid
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-  components: {
-    MuiDataGrid: {
-      styleOverrides: {
-        root: {
-          border: '1px solid #e2e8f0',
-          borderRadius: '8px',
-          '& .MuiDataGrid-cell': {
-            borderColor: '#f1f5f9',
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: '#f8fafc',
-            borderBottom: '1px solid #e2e8f0',
-          },
-        },
-      },
-    },
-  },
-});
-
 const ZonesPage: React.FC = () => {
   const [view, setView] = useState<"table" | "map">("table");
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [sortField, setSortField] = useState<keyof Zone>('name');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [newZone, setNewZone] = useState({
     name: "",
     code: "",
@@ -76,6 +70,44 @@ const ZonesPage: React.FC = () => {
     const wards = parseCSV(wardsCSVData);
     return processWardsIntoZones(wards);
   }, []);
+
+  // Sort zones
+  const sortedZones = useMemo(() => {
+    return [...zones].sort((a, b) => {
+      const aVal = a[sortField];
+      const bVal = b[sortField];
+      
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        return sortDirection === 'asc' 
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+      
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortDirection === 'asc' ? aVal - bVal : bVal - aVal;
+      }
+      
+      return 0;
+    });
+  }, [zones, sortField, sortDirection]);
+
+  const handleSort = (field: keyof Zone) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+  };
+
+  const getSortIcon = (field: keyof Zone) => {
+    if (sortField !== field) {
+      return <ArrowUpDown className="ml-2 h-4 w-4" />;
+    }
+    return sortDirection === 'asc' 
+      ? <ArrowUp className="ml-2 h-4 w-4" />
+      : <ArrowDown className="ml-2 h-4 w-4" />;
+  };
 
   const getStatusBadge = (status: string) => {
     const variant = status === "High Priority" ? "destructive" : 
@@ -104,113 +136,21 @@ const ZonesPage: React.FC = () => {
     setNewZone({ name: "", code: "", wards: "", state: "", district: "" });
   };
 
-  const handleViewZone = (id: GridRowId) => {
-    const zone = zones.find(z => z.id === id);
-    toast.info(`Viewing details for ${zone?.name}`);
+  const handleViewZone = (zone: Zone) => {
+    toast.info(`Viewing details for ${zone.name}`, {
+      description: `${zone.wards} wards • ${zone.reports} reports • Urgency: ${zone.urgencyScore}%`
+    });
   };
 
-  const handleEditZone = (id: GridRowId) => {
-    const zone = zones.find(z => z.id === id);
-    toast.info(`Editing ${zone?.name}`);
+  const handleEditZone = (zone: Zone) => {
+    toast.info(`Editing ${zone.name}`);
   };
 
-  const handleDeleteZone = (id: GridRowId) => {
-    const zone = zones.find(z => z.id === id);
-    if (window.confirm(`Are you sure you want to delete ${zone?.name}?`)) {
-      toast.success(`Zone "${zone?.name}" deleted successfully!`);
+  const handleDeleteZone = (zone: Zone) => {
+    if (window.confirm(`Are you sure you want to delete ${zone.name}?`)) {
+      toast.success(`Zone "${zone.name}" deleted successfully!`);
     }
   };
-
-  // Define DataGrid columns
-  const columns: GridColDef[] = [
-    {
-      field: 'name',
-      headerName: 'Zone Name',
-      width: 200,
-      sortable: true,
-      renderCell: (params) => (
-        <div className="font-medium">{params.value}</div>
-      ),
-    },
-    {
-      field: 'code',
-      headerName: 'Code',
-      width: 120,
-      sortable: true,
-    },
-    {
-      field: 'wards',
-      headerName: 'Wards',
-      width: 80,
-      type: 'number',
-      sortable: true,
-    },
-    {
-      field: 'reports',
-      headerName: 'Reports',
-      width: 100,
-      type: 'number',
-      sortable: true,
-    },
-    {
-      field: 'activeContractors',
-      headerName: 'Contractors',
-      width: 120,
-      type: 'number',
-      sortable: true,
-    },
-    {
-      field: 'population',
-      headerName: 'Population',
-      width: 120,
-      type: 'number',
-      sortable: true,
-      valueFormatter: (params) => {
-        return new Intl.NumberFormat('en-IN').format(params.value);
-      },
-    },
-    {
-      field: 'urgencyScore',
-      headerName: 'Urgency',
-      width: 140,
-      sortable: true,
-      renderCell: (params) => getUrgencyBadge(params.value),
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 140,
-      sortable: true,
-      renderCell: (params) => getStatusBadge(params.value),
-    },
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
-      width: 120,
-      getActions: (params) => [
-        <GridActionsCellItem
-          key="view"
-          icon={<Eye className="h-4 w-4" />}
-          label="View"
-          onClick={() => handleViewZone(params.id)}
-        />,
-        <GridActionsCellItem
-          key="edit"
-          icon={<Edit className="h-4 w-4" />}
-          label="Edit"
-          onClick={() => handleEditZone(params.id)}
-        />,
-        <GridActionsCellItem
-          key="delete"
-          icon={<Trash2 className="h-4 w-4" />}
-          label="Delete"
-          onClick={() => handleDeleteZone(params.id)}
-          showInMenu
-        />,
-      ],
-    },
-  ];
 
   // CSV export data
   const csvData = zones.map(zone => ({
@@ -379,28 +319,143 @@ const ZonesPage: React.FC = () => {
 
       {/* Content */}
       {view === "table" ? (
-        <Card className="p-1">
-          <ThemeProvider theme={theme}>
-            <div style={{ height: 600, width: '100%' }}>
-              <DataGrid
-                rows={zones}
-                columns={columns}
-                initialState={{
-                  pagination: {
-                    paginationModel: { page: 0, pageSize: 10 },
-                  },
-                }}
-                pageSizeOptions={[5, 10, 25]}
-                checkboxSelection={false}
-                disableRowSelectionOnClick
-                sx={{
-                  '& .MuiDataGrid-row:hover': {
-                    backgroundColor: '#f8fafc',
-                  },
-                }}
-              />
-            </div>
-          </ThemeProvider>
+        <Card className="border border-gray-200 shadow-sm">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-gray-50">
+                <TableHead className="font-semibold">
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => handleSort('name')}
+                    className="h-auto p-0 font-semibold hover:bg-transparent"
+                  >
+                    Zone Name
+                    {getSortIcon('name')}
+                  </Button>
+                </TableHead>
+                <TableHead className="font-semibold">
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => handleSort('code')}
+                    className="h-auto p-0 font-semibold hover:bg-transparent"
+                  >
+                    Code
+                    {getSortIcon('code')}
+                  </Button>
+                </TableHead>
+                <TableHead className="font-semibold">
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => handleSort('wards')}
+                    className="h-auto p-0 font-semibold hover:bg-transparent"
+                  >
+                    Wards
+                    {getSortIcon('wards')}
+                  </Button>
+                </TableHead>
+                <TableHead className="font-semibold">
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => handleSort('reports')}
+                    className="h-auto p-0 font-semibold hover:bg-transparent"
+                  >
+                    Reports
+                    {getSortIcon('reports')}
+                  </Button>
+                </TableHead>
+                <TableHead className="font-semibold">Contractors</TableHead>
+                <TableHead className="font-semibold">
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => handleSort('population')}
+                    className="h-auto p-0 font-semibold hover:bg-transparent"
+                  >
+                    Population
+                    {getSortIcon('population')}
+                  </Button>
+                </TableHead>
+                <TableHead className="font-semibold">
+                  <Button 
+                    variant="ghost" 
+                    onClick={() => handleSort('urgencyScore')}
+                    className="h-auto p-0 font-semibold hover:bg-transparent"
+                  >
+                    Urgency
+                    {getSortIcon('urgencyScore')}
+                  </Button>
+                </TableHead>
+                <TableHead className="font-semibold">Status</TableHead>
+                <TableHead className="text-right font-semibold">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sortedZones.map((zone) => (
+                <TableRow 
+                  key={zone.id} 
+                  className="hover:bg-gray-50 transition-colors border-b border-gray-100"
+                >
+                  <TableCell className="font-medium">{zone.name}</TableCell>
+                  <TableCell>
+                    <code className="bg-gray-100 px-2 py-1 rounded text-sm">
+                      {zone.code}
+                    </code>
+                  </TableCell>
+                  <TableCell>
+                    <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm font-medium">
+                      {zone.wards}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium">
+                      {zone.reports}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm font-medium">
+                      {zone.activeContractors}
+                    </span>
+                  </TableCell>
+                  <TableCell className="font-mono text-sm">
+                    {new Intl.NumberFormat('en-IN').format(zone.population)}
+                  </TableCell>
+                  <TableCell>{getUrgencyBadge(zone.urgencyScore)}</TableCell>
+                  <TableCell>{getStatusBadge(zone.status)}</TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0 hover:bg-gray-100">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="bg-white border border-gray-200 shadow-lg">
+                        <DropdownMenuItem 
+                          onClick={() => handleViewZone(zone)}
+                          className="hover:bg-gray-50"
+                        >
+                          <Eye className="mr-2 h-4 w-4" />
+                          View Details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => handleEditZone(zone)}
+                          className="hover:bg-gray-50"
+                        >
+                          <Edit className="mr-2 h-4 w-4" />
+                          Edit Zone
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => handleDeleteZone(zone)}
+                          className="text-red-600 hover:bg-red-50"
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          Delete Zone
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Card>
       ) : (
         <Card className="p-6">

@@ -98,52 +98,40 @@ const Features = () => {
   ];
 
   return (
-    <section className="w-full py-20 md:py-32 bg-gradient-to-br from-background via-secondary/20 to-background relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-      </div>
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="w-full py-16 md:py-20 bg-white relative">
+      <div className="container mx-auto px-4 max-w-6xl">
         {/* Citizen Features */}
-        <div className="mb-32">
-          <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <div className="inline-block px-4 py-2 bg-[#2E6A56]/10 text-[#2E6A56] rounded-full text-sm font-medium mb-4">
               For Citizens
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#4A4A4A] mb-4 font-['Poppins']">
               Empowerment Tools
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-[#4A4A4A] max-w-2xl mx-auto leading-relaxed font-['Inter'] font-light">
               Intuitive features designed to make civic engagement effortless and impactful
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {citizenFeatures.map((feature, index) => (
-              <Card key={index} className="group relative p-8 bg-gradient-to-br from-card to-card/50 border-2 border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10">
-                <div className="flex items-start space-x-6">
-                  <div className="relative">
-                    <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <feature.icon className="w-8 h-8 text-primary-foreground" />
-                    </div>
-                    <div className="absolute -inset-2 bg-primary/20 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <Card key={index} className="group p-6 bg-[#EFEFEF] border-0" style={{boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.05)'}}>
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center">
+                    <feature.icon className="w-6 h-6 text-[#2E6A56] stroke-1" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs text-primary font-semibold uppercase tracking-wider mb-2">
+                    <div className="text-xs text-[#2E6A56] font-semibold uppercase tracking-wider mb-1">
                       {feature.highlight}
                     </div>
-                    <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                    <h3 className="text-lg font-bold text-[#2E6A56] mb-2 font-['Poppins']">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-[#4A4A4A] leading-relaxed text-sm font-['Inter']">
                       {feature.description}
                     </p>
                   </div>
-                </div>
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                  <ArrowRight className="w-5 h-5 text-primary" />
                 </div>
               </Card>
             ))}

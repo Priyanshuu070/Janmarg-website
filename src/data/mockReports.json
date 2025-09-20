@@ -1,0 +1,871 @@
+{
+  "reports": [
+    {
+      "id": "RPT-001",
+      "title": "Broken Streetlight on Main Road",
+      "description": "The streetlight near the bus stop on Main Road has been flickering for weeks and finally went out completely. This creates a safety hazard for pedestrians, especially during evening hours.",
+      "reporter": {
+        "id": "cit001",
+        "name": "Rajesh Kumar",
+        "email": "rajesh.kumar@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward001",
+        "name": "Central Ward - Connaught Place",
+        "state": "Delhi",
+        "district": "New Delhi",
+        "zone": "Central Zone"
+      },
+      "issueType": {
+        "id": "issue001",
+        "title": "Street Lighting",
+        "code": "STL001"
+      },
+      "department": {
+        "id": "dept001",
+        "name": "Electricity",
+        "code": "ELC"
+      },
+      "status": "PENDING",
+      "severity": 7,
+      "priorityScore": 74,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.6139,
+      "longitude": 77.2090,
+      "address": "Main Road, Near Bus Stop, Central Ward, New Delhi",
+      "upvotes": 15,
+      "createdAt": "2024-01-15T10:30:00Z",
+      "updatedAt": "2024-01-15T10:30:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": null,
+      "assignedContractorId": "cont003",
+      "citizenRating": null,
+      "proofSubmitted": false,
+      "duplicateFlag": false,
+      "ageInDays": 248,
+      "media": [
+        {
+          "id": "media001",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Broken streetlight during evening"
+        }
+      ],
+      "tags": ["urgent", "safety", "lighting"]
+    },
+    {
+      "id": "RPT-002",
+      "title": "Pothole on Highway Junction",
+      "description": "Large pothole at the junction of Highway 24 and Service Road causing vehicle damage and traffic slowdown. Water accumulates during rain making it even more dangerous.",
+      "reporter": {
+        "id": "cit002",
+        "name": "Priya Sharma",
+        "email": "priya.sharma@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward002",
+        "name": "Highway Ward - DLF Phase 1",
+        "state": "Haryana",
+        "district": "Gurgaon",
+        "zone": "South Zone"
+      },
+      "issueType": {
+        "id": "issue002",
+        "title": "Road Maintenance",
+        "code": "RDM001"
+      },
+      "department": {
+        "id": "dept002",
+        "name": "Roads & Infrastructure",
+        "code": "RDA"
+      },
+      "status": "IN_PROGRESS",
+      "severity": 9,
+      "priorityScore": 92,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 2,
+      "latitude": 28.4595,
+      "longitude": 77.2266,
+      "address": "Highway 24 Junction, Service Road, Gurgaon",
+      "upvotes": 32,
+      "createdAt": "2024-01-10T14:20:00Z",
+      "updatedAt": "2024-09-16T09:15:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": "2024-01-12T10:30:00Z",
+      "assignedContractorId": "cont001",
+      "citizenRating": null,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 253,
+      "media": [
+        {
+          "id": "media002",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Large pothole causing traffic issues"
+        },
+        {
+          "id": "media003",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Water accumulation in pothole during rain"
+        }
+      ],
+      "tags": ["urgent", "traffic", "road-damage"]
+    },
+    {
+      "id": "RPT-003",
+      "title": "Garbage Collection Missed for 3 Days",
+      "description": "Garbage collection has been skipped for the past 3 days in Sector 15. The bins are overflowing and creating unhygienic conditions in the residential area.",
+      "reporter": {
+        "id": "cit003",
+        "name": "Anil Gupta",
+        "email": "anil.gupta@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward003",
+        "name": "Sector 15 Ward - IT Hub",
+        "state": "Haryana",
+        "district": "Gurgaon",
+        "zone": "East Zone"
+      },
+      "issueType": {
+        "id": "issue003",
+        "title": "Waste Management",
+        "code": "WST001"
+      },
+      "department": {
+        "id": "dept003",
+        "name": "Sanitation",
+        "code": "MCG"
+      },
+      "status": "RESOLVED",
+      "severity": 8,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 1,
+      "latitude": 28.4089,
+      "longitude": 77.0434,
+      "address": "Sector 15, Residential Area, Gurgaon",
+      "upvotes": 28,
+      "createdAt": "2024-09-12T08:45:00Z",
+      "updatedAt": "2024-09-14T16:30:00Z",
+      "resolvedAt": "2024-09-14T16:30:00Z",
+      "firstResponseAt": "2024-09-12T14:20:00Z",
+      "assignedContractorId": "cont002",
+      "citizenRating": 4,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 2,
+      "media": [
+        {
+          "id": "media004",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Overflowing garbage bins"
+        }
+      ],
+      "tags": ["sanitation", "health", "urgent"],
+      "priorityScore": 82
+    },
+    {
+      "id": "RPT-004",
+      "title": "Water Leakage from Underground Pipe",
+      "description": "Continuous water leakage from underground pipeline near the park. Water is being wasted and creating muddy conditions on the walking path.",
+      "reporter": {
+        "id": "cit004",
+        "name": "Sunita Devi",
+        "email": "sunita.devi@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward004",
+        "name": "Park View Ward - Lajpat Nagar",
+        "state": "Delhi",
+        "district": "South Delhi",
+        "zone": "South Zone"
+      },
+      "issueType": {
+        "id": "issue004",
+        "title": "Water Supply",
+        "code": "WTR001"
+      },
+      "department": {
+        "id": "dept004",
+        "name": "Water Supply",
+        "code": "DJB"
+      },
+      "status": "ASSIGNED",
+      "severity": 6,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.5355,
+      "longitude": 77.2507,
+      "address": "Near Central Park, Walking Path, South Delhi",
+      "upvotes": 19,
+      "createdAt": "2024-09-11T11:15:00Z",
+      "updatedAt": "2024-09-15T13:45:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": "2024-09-11T15:30:00Z",
+      "assignedContractorId": "cont004",
+      "citizenRating": null,
+      "proofSubmitted": false,
+      "duplicateFlag": false,
+      "ageInDays": 9,
+      "media": [
+        {
+          "id": "media005",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Water leakage creating muddy conditions"
+        }
+      ],
+      "tags": ["water", "infrastructure", "waste"],
+      "priorityScore": 68
+    },
+    {
+      "id": "RPT-005",
+      "title": "Illegal Construction in Residential Area",
+      "description": "Unauthorized construction is happening in violation of building codes. The construction is blocking natural light to neighboring properties and may not comply with safety regulations.",
+      "reporter": {
+        "id": "cit005",
+        "name": "Deepak Singh",
+        "email": "deepak.singh@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward005",
+        "name": "Model Town Ward - GTB Nagar",
+        "state": "Delhi",
+        "district": "North Delhi",
+        "zone": "North Zone"
+      },
+      "issueType": {
+        "id": "issue005",
+        "title": "Building Violations",
+        "code": "BLD001"
+      },
+      "department": {
+        "id": "dept005",
+        "name": "Building & Construction",
+        "code": "DDA"
+      },
+      "status": "RESOLVED",
+      "severity": 7,
+      "isSensitive": true,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.7041,
+      "longitude": 77.1025,
+      "address": "Block C, Model Town, North Delhi",
+      "upvotes": 12,
+      "createdAt": "2024-02-28T09:30:00Z",
+      "updatedAt": "2024-03-10T17:20:00Z",
+      "resolvedAt": "2024-03-10T17:20:00Z",
+      "firstResponseAt": "2024-03-01T11:00:00Z",
+      "assignedContractorId": "cont006",
+      "citizenRating": 5,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 11,
+      "media": [
+        {
+          "id": "media006",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Unauthorized construction blocking neighbor's light"
+        }
+      ],
+      "tags": ["legal", "construction", "resolved"],
+      "priorityScore": 76
+    },
+    {
+      "id": "RPT-006",
+      "title": "Public Park Maintenance Required",
+      "description": "The public park needs urgent attention - broken swings, damaged benches, overgrown grass, and non-functional drinking water fountain. Children's safety is a concern.",
+      "reporter": {
+        "id": "cit006",
+        "name": "Meera Jain",
+        "email": "meera.jain@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward006",
+        "name": "Green Valley Ward - Preet Vihar",
+        "state": "Delhi",
+        "district": "East Delhi",
+        "zone": "East Zone"
+      },
+      "issueType": {
+        "id": "issue006",
+        "title": "Parks & Recreation",
+        "code": "PRK001"
+      },
+      "department": {
+        "id": "dept006",
+        "name": "Parks & Recreation",
+        "code": "HORT"
+      },
+      "status": "IN_BIDDING",
+      "severity": 5,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.6508,
+      "longitude": 77.3152,
+      "address": "Green Valley Public Park, East Delhi",
+      "upvotes": 45,
+      "createdAt": "2024-09-08T16:20:00Z",
+      "updatedAt": "2024-09-14T12:10:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": "2024-09-09T09:30:00Z",
+      "assignedContractorId": "cont005",
+      "citizenRating": null,
+      "proofSubmitted": false,
+      "duplicateFlag": false,
+      "ageInDays": 12,
+      "media": [
+        {
+          "id": "media007",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Broken playground equipment"
+        },
+        {
+          "id": "media008",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Damaged benches and overgrown grass"
+        }
+      ],
+      "tags": ["parks", "children", "maintenance"],
+      "priorityScore": 61
+    },
+    {
+      "id": "RPT-007",
+      "title": "Traffic Signal Malfunction at Busy Intersection",
+      "description": "Traffic lights at the main intersection have been malfunctioning since yesterday. All lights are stuck on red causing severe traffic jams and increasing accident risk.",
+      "reporter": {
+        "id": "cit007",
+        "name": "Vikram Yadav",
+        "email": "vikram.yadav@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward007",
+        "name": "Commercial Hub Ward - Karol Bagh",
+        "state": "Delhi",
+        "district": "Central Delhi",
+        "zone": "Central Zone"
+      },
+      "issueType": {
+        "id": "issue007",
+        "title": "Traffic Management",
+        "code": "TRF001"
+      },
+      "department": {
+        "id": "dept007",
+        "name": "Roads & Infrastructure",
+        "code": "TPD"
+      },
+      "status": "PENDING_CITIZEN_REVIEW",
+      "severity": 10,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 3,
+      "latitude": 28.6289,
+      "longitude": 77.2065,
+      "address": "Main Intersection, Commercial Hub, Central Delhi",
+      "upvotes": 67,
+      "createdAt": "2024-09-16T07:30:00Z",
+      "updatedAt": "2024-09-16T18:45:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": "2024-09-16T08:00:00Z",
+      "assignedContractorId": "cont001",
+      "citizenRating": null,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 4,
+      "media": [
+        {
+          "id": "media009",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Traffic jam due to malfunctioning signal"
+        }
+      ],
+      "tags": ["critical", "traffic", "safety", "urgent"],
+      "priorityScore": 95
+    },
+    {
+      "id": "RPT-008",
+      "title": "Stray Dogs Causing Safety Concerns",
+      "description": "Pack of stray dogs in the residential colony are becoming aggressive, especially towards children and elderly. Multiple residents have reported feeling unsafe during evening walks.",
+      "reporter": {
+        "id": "cit008", 
+        "name": "Kavita Agarwal",
+        "email": "kavita.agarwal@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward008",
+        "name": "Residential Colony Ward - Rajouri Garden",
+        "state": "Delhi",
+        "district": "West Delhi",
+        "zone": "West Zone"
+      },
+      "issueType": {
+        "id": "issue008",
+        "title": "Animal Control",
+        "code": "ANM001"
+      },
+      "department": {
+        "id": "dept008",
+        "name": "Public Safety",
+        "code": "AWD"
+      },
+      "status": "VERIFIED",
+      "severity": 8,
+      "isSensitive": true,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.6692,
+      "longitude": 77.1151,
+      "address": "Residential Colony, Block A, West Delhi",
+      "upvotes": 24,
+      "createdAt": "2024-09-13T19:15:00Z",
+      "updatedAt": "2024-09-15T11:30:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": "2024-09-14T10:00:00Z",
+      "assignedContractorId": "cont008",
+      "citizenRating": null,
+      "proofSubmitted": false,
+      "duplicateFlag": false,
+      "ageInDays": 7,
+      "media": [
+        {
+          "id": "media010",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Stray dogs in residential area"
+        }
+      ],
+      "tags": ["safety", "animals", "community"],
+      "priorityScore": 79
+    },
+    {
+      "id": "RPT-009",
+      "title": "Power Outage in Market Area",
+      "description": "Frequent power cuts in the main market area affecting businesses. Outages lasting 4-6 hours daily for the past week, causing significant economic loss to shop owners.",
+      "reporter": {
+        "id": "cit009",
+        "name": "Rohit Verma",
+        "email": "rohit.verma@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward009",
+        "name": "Market District Ward - Saket",
+        "state": "Delhi",
+        "district": "South Delhi",
+        "zone": "South Zone"
+      },
+      "issueType": {
+        "id": "issue009",
+        "title": "Electricity Supply",
+        "code": "ELC001"
+      },
+      "department": {
+        "id": "dept001",
+        "name": "Electricity",
+        "code": "DEB"
+      },
+      "status": "RESOLVED",
+      "severity": 9,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 1,
+      "latitude": 28.5244,
+      "longitude": 77.2066,
+      "address": "Main Market Area, South Delhi",
+      "upvotes": 89,
+      "createdAt": "2024-09-05T12:00:00Z",
+      "updatedAt": "2024-09-12T15:30:00Z",
+      "resolvedAt": "2024-09-12T15:30:00Z",
+      "firstResponseAt": "2024-09-05T16:45:00Z",
+      "assignedContractorId": "cont003",
+      "citizenRating": 4,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 7,
+      "media": [
+        {
+          "id": "media011",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Shops closed due to power outage"
+        }
+      ],
+      "tags": ["electricity", "business", "resolved"],
+      "priorityScore": 88
+    },
+    {
+      "id": "RPT-010",
+      "title": "Sewage Overflow in Residential Street",
+      "description": "Sewage is overflowing from manholes onto the street creating unhygienic conditions and foul odor. The situation worsens during rain and poses health risks to residents.",
+      "reporter": {
+        "id": "cit010",
+        "name": "Sanjay Kapoor",
+        "email": "sanjay.kapoor@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward010",
+        "name": "Old City Ward - Chandni Chowk",
+        "state": "Delhi",
+        "district": "Old Delhi",
+        "zone": "Central Zone"
+      },
+      "issueType": {
+        "id": "issue010",
+        "title": "Sewage Management",
+        "code": "SEW001"
+      },
+      "department": {
+        "id": "dept004",
+        "name": "Water Supply",
+        "code": "DSB"
+      },
+      "status": "PENDING",
+      "severity": 9,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "duplicateOfId": null,
+      "latitude": 28.6500,
+      "longitude": 77.2300,
+      "address": "Lane 3, Old City Area, Old Delhi",
+      "upvotes": 52,
+      "createdAt": "2023-12-09T10:45:00Z",
+      "updatedAt": "2023-12-11T14:20:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": null,
+      "assignedContractorId": null,
+      "citizenRating": null,
+      "proofSubmitted": false,
+      "duplicateFlag": false,
+      "ageInDays": 286,
+      "media": [
+        {
+          "id": "media012",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Sewage overflow on residential street"
+        }
+      ],
+      "tags": ["sewage", "health", "sanitation"],
+      "priorityScore": 91
+    },
+    {
+      "id": "RPT-011",
+      "title": "Bus Stop Shelter Damaged by Storm",
+      "description": "The bus stop shelter on MG Road was severely damaged during last night's storm. The roof is partially collapsed and glass panels are shattered, making it unsafe for commuters.",
+      "reporter": {
+        "id": "cit011",
+        "name": "Ravi Patel",
+        "email": "ravi.patel@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward011",
+        "name": "Industrial Ward - Azadpur",
+        "state": "Delhi",
+        "district": "North Delhi",
+        "zone": "North Zone"
+      },
+      "issueType": {
+        "id": "issue011",
+        "title": "Public Infrastructure",
+        "code": "INF001"
+      },
+      "department": {
+        "id": "dept002",
+        "name": "Roads & Infrastructure",
+        "code": "PWD"
+      },
+      "status": "REOPENED",
+      "severity": 6,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.7155,
+      "longitude": 77.1693,
+      "address": "MG Road Bus Stop, Azadpur, North Delhi",
+      "upvotes": 31,
+      "createdAt": "2024-08-15T06:30:00Z",
+      "updatedAt": "2024-09-18T14:45:00Z",
+      "resolvedAt": "2024-08-20T16:00:00Z",
+      "firstResponseAt": "2024-08-15T10:15:00Z",
+      "assignedContractorId": "cont007",
+      "citizenRating": 2,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 36,
+      "media": [
+        {
+          "id": "media013",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Damaged bus stop shelter after storm"
+        }
+      ],
+      "tags": ["infrastructure", "transport", "storm-damage", "reopened"],
+      "priorityScore": 64
+    },
+    {
+      "id": "RPT-012",
+      "title": "Blocked Drainage Causing Road Flooding",
+      "description": "The main drainage on Tech Park Road is completely blocked, causing severe waterlogging during monsoon. This affects traffic flow and creates breeding ground for mosquitoes.",
+      "reporter": {
+        "id": "cit012",
+        "name": "Anita Mishra",
+        "email": "anita.mishra@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward012",
+        "name": "Tech Park Ward - Noida Sector 62",
+        "state": "Uttar Pradesh",
+        "district": "Gautam Buddh Nagar",
+        "zone": "East Zone"
+      },
+      "issueType": {
+        "id": "issue012",
+        "title": "Drainage System",
+        "code": "DRN001"
+      },
+      "department": {
+        "id": "dept004",
+        "name": "Water Supply",
+        "code": "NDA"
+      },
+      "status": "COMPLETED",
+      "severity": 8,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 2,
+      "latitude": 28.6052,
+      "longitude": 77.3649,
+      "address": "Tech Park Road, Sector 62, Noida",
+      "upvotes": 73,
+      "createdAt": "2024-07-22T11:30:00Z",
+      "updatedAt": "2024-08-10T17:20:00Z",
+      "resolvedAt": "2024-08-10T17:20:00Z",
+      "firstResponseAt": "2024-07-23T08:45:00Z",
+      "assignedContractorId": "cont004",
+      "citizenRating": 5,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 19,
+      "media": [
+        {
+          "id": "media014",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Waterlogged road due to blocked drainage"
+        }
+      ],
+      "tags": ["drainage", "flooding", "traffic", "resolved"],
+      "priorityScore": 84
+    },
+    {
+      "id": "RPT-013",
+      "title": "Noise Pollution from Construction Site",
+      "description": "Excessive noise from construction work starting early morning (5 AM) and continuing late night, violating noise pollution norms and disturbing residents.",
+      "reporter": {
+        "id": "cit013",
+        "name": "Nisha Verma",
+        "email": "nisha.verma@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward013",
+        "name": "Residential Heights Ward - Dwarka",
+        "state": "Delhi",
+        "district": "South West Delhi",
+        "zone": "West Zone"
+      },
+      "issueType": {
+        "id": "issue013",
+        "title": "Noise Pollution",
+        "code": "NOI001"
+      },
+      "department": {
+        "id": "dept009",
+        "name": "Pollution Control",
+        "code": "DPCC"
+      },
+      "status": "ASSIGNED",
+      "severity": 6,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.5921,
+      "longitude": 77.0460,
+      "address": "Residential Heights, Dwarka Sector 10, Delhi",
+      "upvotes": 34,
+      "createdAt": "2024-09-18T06:30:00Z",
+      "updatedAt": "2024-09-19T10:15:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": "2024-09-18T11:20:00Z",
+      "assignedContractorId": "cont009",
+      "citizenRating": null,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 2,
+      "media": [
+        {
+          "id": "media015",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Construction site generating excessive noise"
+        }
+      ],
+      "tags": ["noise", "pollution", "construction", "residential"],
+      "priorityScore": 57
+    },
+    {
+      "id": "RPT-014",
+      "title": "Broken Footpath Near School",
+      "description": "Footpath outside government school has multiple cracks and uneven surfaces making it dangerous for children. Several students have tripped and fallen.",
+      "reporter": {
+        "id": "cit014",
+        "name": "Ramesh Gupta",
+        "email": "ramesh.gupta@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward014",
+        "name": "Education Hub Ward - Rohini",
+        "state": "Delhi",
+        "district": "North West Delhi",
+        "zone": "North Zone"
+      },
+      "issueType": {
+        "id": "issue014",
+        "title": "Footpath Repair",
+        "code": "FTP001"
+      },
+      "department": {
+        "id": "dept002",
+        "name": "Roads & Infrastructure",
+        "code": "PWD"
+      },
+      "status": "PENDING",
+      "severity": 8,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 1,
+      "latitude": 28.7508,
+      "longitude": 77.1176,
+      "address": "Government School, Sector 7, Rohini, Delhi",
+      "upvotes": 67,
+      "createdAt": "2024-01-08T13:45:00Z",
+      "updatedAt": "2024-01-10T09:30:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": null,
+      "assignedContractorId": null,
+      "citizenRating": null,
+      "proofSubmitted": true,
+      "duplicateFlag": false,
+      "ageInDays": 256,
+      "media": [
+        {
+          "id": "media016",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Broken footpath with cracks near school"
+        }
+      ],
+      "tags": ["safety", "children", "footpath", "school"],
+      "priorityScore": 86
+    },
+    {
+      "id": "RPT-015",
+      "title": "Air Quality Monitoring Device Not Working",
+      "description": "The air quality monitoring station in the area has been showing the same readings for weeks, indicating it's malfunctioning and needs immediate repair.",
+      "reporter": {
+        "id": "cit015",
+        "name": "Dr. Pradeep Kumar",
+        "email": "dr.pradeep@email.com",
+        "role": "CITIZEN"
+      },
+      "ward": {
+        "id": "ward015",
+        "name": "Industrial Area Ward - Mayapuri",
+        "state": "Delhi",
+        "district": "South West Delhi",
+        "zone": "West Zone"
+      },
+      "issueType": {
+        "id": "issue015",
+        "title": "Air Quality Monitoring",
+        "code": "AQM001"
+      },
+      "department": {
+        "id": "dept009",
+        "name": "Pollution Control",
+        "code": "DPCC"
+      },
+      "status": "IN_PROGRESS",
+      "severity": 7,
+      "isSensitive": false,
+      "isSpam": false,
+      "isDuplicate": false,
+      "noOfDuplicates": 0,
+      "latitude": 28.5812,
+      "longitude": 77.1449,
+      "address": "Air Quality Station, Industrial Area, Mayapuri",
+      "upvotes": 23,
+      "createdAt": "2024-09-10T14:20:00Z",
+      "updatedAt": "2024-09-17T16:45:00Z",
+      "resolvedAt": null,
+      "firstResponseAt": "2024-09-11T10:30:00Z",
+      "assignedContractorId": "cont010",
+      "citizenRating": null,
+      "proofSubmitted": false,
+      "duplicateFlag": false,
+      "ageInDays": 10,
+      "media": [
+        {
+          "id": "media017",
+          "url": "/placeholder.svg",
+          "mimeType": "image/jpeg",
+          "caption": "Malfunctioning air quality monitoring device"
+        }
+      ],
+      "tags": ["environment", "monitoring", "air-quality", "technical"],
+      "priorityScore": 71
+    }
+  ]
+}

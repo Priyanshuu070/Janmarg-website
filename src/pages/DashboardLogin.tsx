@@ -40,10 +40,16 @@ const DashboardLogin: React.FC = () => {
     setIsLoading(true);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    setIsLoading(false);
-    navigate("/dashboard");
+    // Check mock credentials
+    if (loginData.email === "notharsh05@gmail.com" && loginData.password === "admin123") {
+      setIsLoading(false);
+      navigate("/dashboard");
+    } else {
+      setIsLoading(false);
+      alert("Invalid credentials! Please use:\nEmail: notharsh05@gmail.com\nPassword: admin123");
+    }
   };
 
   const handleSignup = async (e: React.FormEvent) => {
