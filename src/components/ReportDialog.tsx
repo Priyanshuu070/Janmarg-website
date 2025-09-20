@@ -23,7 +23,7 @@ import {
   FileText,
   TrendingUp,
 } from "lucide-react";
-import { getScoringBreakdown, getPriorityLevel, ScoringParameters } from "@/lib/reportScoring";
+import { getScoringBreakdown, getPriorityLevel, ScoringParameters, generateReportScoring } from "@/lib/reportScoring";
 
 interface ReportDialogProps {
   report: any;
@@ -121,10 +121,32 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
   
   if (!report) return null;
 
-  const timeline = generateTimeline(report.date);
+  const timeline = generateTimeline(report.createdAt || report.date);
   const officer = getOfficerDetails(report.id);
-  const scoringBreakdown = getScoringBreakdown(report.scoringParams);
-  const priorityInfo = getPriorityLevel(report.priorityScore);
+  
+  // Generate scoring parameters if not available
+  let scoringParams;
+  let scoringBreakdown;
+  
+  try {
+    scoringParams = report.scoringParams || generateReportScoring(report);
+    scoringBreakdown = getScoringBreakdown(scoringParams);
+  } catch (error) {
+    console.error("Error generating scoring breakdown:", error);
+    // Fallback scoring breakdown
+    scoringBreakdown = {
+      urgency: { score: 0, weight: 0.3, weightedScore: 0 },
+      duplicates: { score: 0, weight: 0.15, weightedScore: 0 },
+      areaCriticality: { score: 0, weight: 0.15, weightedScore: 0 },
+      reporterTrust: { score: 0, weight: 0.1, weightedScore: 0 },
+      aiSeverity: { score: 0, weight: 0.1, weightedScore: 0 },
+      age: { score: 0, weight: 0.1, weightedScore: 0 },
+      proofCompleteness: { score: 0, weight: 0.07, weightedScore: 0 },
+      eventFlags: { score: 0, weight: 0.03, weightedScore: 0 }
+    };
+  }
+  
+  const priorityInfo = getPriorityLevel(report.priorityScore || 0);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
