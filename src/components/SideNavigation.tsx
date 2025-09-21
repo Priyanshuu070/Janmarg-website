@@ -8,7 +8,6 @@ import {
   Users,
   FileText,
   Gavel,
-  HardHat,
   Download,
   Settings,
   ChevronLeft,
@@ -27,6 +26,13 @@ const navItems = [
     icon: LayoutDashboard,
     badge: null,
     description: "Overview & Analytics",
+  },
+  {
+    id: "reports",
+    label: "Reports",
+    icon: FileText,
+    badge: "156",
+    description: "Citizen Reports",
   },
   {
     id: "zones",
@@ -50,25 +56,11 @@ const navItems = [
     description: "City Departments",
   },
   {
-    id: "reports",
-    label: "Reports",
-    icon: FileText,
-    badge: "156",
-    description: "Citizen Reports",
-  },
-  {
     id: "bidding",
     label: "Bidding",
     icon: Gavel,
     badge: "12",
     description: "Contract Bidding",
-  },
-  {
-    id: "contractors",
-    label: "Contractors",
-    icon: HardHat,
-    badge: "35",
-    description: "Service Providers",
   },
   {
     id: "export-report",

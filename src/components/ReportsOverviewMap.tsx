@@ -114,7 +114,7 @@ const ReportsOverviewMap: React.FC<ReportsOverviewMapProps> = ({
             <Popup>
               <div className="p-2 min-w-[200px]">
                 <h3 className="font-semibold text-base mb-2">
-                  {report.issueType}
+                  {String(report.issueType || 'Unknown Issue')}
                 </h3>
                 <div className="space-y-1 text-sm">
                   <div>

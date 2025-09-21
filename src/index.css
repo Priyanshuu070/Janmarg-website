@@ -24,7 +24,7 @@
     --color-border: #d1d5db;
     --color-text: #4A4A4A;
     --color-muted: #6b7280;
-    --font-family-base: "Inter", "Poppins", "Montserrat", sans-serif;
+    --font-family-base: "Poppins", "Inter", "Montserrat", sans-serif;
 
     /* Tailwind CSS Variables - Updated for Green Theme */
     --primary: 151 42% 29%; /* #2E6A56 converted to HSL */
@@ -81,5 +81,43 @@
   a,
   [role="button"] {
     @apply transition-colors duration-200 ease-in-out;
+  }
+
+  /* Custom Font Classes */
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Animation Keyframes */
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.3s ease-out;
+  }
+
+  /* Hover Animations */
+  .hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
   }
 }

@@ -22,13 +22,46 @@ import {
   Camera,
   FileText,
   TrendingUp,
+  GitBranch,
+  GitCommit,
+  Trophy,
+  Timer,
 } from "lucide-react";
 import { getScoringBreakdown, getPriorityLevel, ScoringParameters, generateReportScoring } from "@/lib/reportScoring";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import mockReportsData from "@/data/mockReports.json";
+import contractorsData from "@/data/contractors.csv?raw";
 
 interface ReportDialogProps {
   report: any;
   isOpen: boolean;
   onClose: () => void;
+}
+
+interface TimelineItem {
+  id: number;
+  action: string;
+  description: string;
+  date: string;
+  time: string;
+  status: 'completed' | 'in-progress' | 'pending';
+  actor: string;
+  icon: any;
+}
+
+interface ScoringBreakdownItem {
+  weight: number;
+  score: number;
+  contribution: number;
+  description: string;
+}
+
+interface ScoringBreakdown {
+  breakdown: Record<string, ScoringBreakdownItem>;
+  totalScore: number;
+  formula: string;
 }
 
 // Mock timeline data - in real app, this would come from API
@@ -121,6 +154,22 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
   
   if (!report) return null;
 
+  // Parse contractor data
+  const parseContractors = (csvData: string) => {
+    const lines = csvData.trim().split('\n');
+    const headers = lines[0].split(',');
+    return lines.slice(1).map(line => {
+      const values = line.split(',');
+      return headers.reduce((obj, header, index) => {
+        obj[header] = values[index];
+        return obj;
+      }, {} as any);
+    });
+  };
+
+  const contractors = parseContractors(contractorsData);
+  const assignedContractor = contractors.find(c => c.contractor_id === report.assignedContractorId);
+
   const timeline = generateTimeline(report.createdAt || report.date);
   const officer = getOfficerDetails(report.id);
   
@@ -135,14 +184,58 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
     console.error("Error generating scoring breakdown:", error);
     // Fallback scoring breakdown
     scoringBreakdown = {
-      urgency: { score: 0, weight: 0.3, weightedScore: 0 },
-      duplicates: { score: 0, weight: 0.15, weightedScore: 0 },
-      areaCriticality: { score: 0, weight: 0.15, weightedScore: 0 },
-      reporterTrust: { score: 0, weight: 0.1, weightedScore: 0 },
-      aiSeverity: { score: 0, weight: 0.1, weightedScore: 0 },
-      age: { score: 0, weight: 0.1, weightedScore: 0 },
-      proofCompleteness: { score: 0, weight: 0.07, weightedScore: 0 },
-      eventFlags: { score: 0, weight: 0.03, weightedScore: 0 }
+      breakdown: {
+        urgency: {
+          weight: 0.30,
+          score: 0,
+          contribution: 0,
+          description: "Community validation through upvotes, normalized by ward population"
+        },
+        duplicates: {
+          weight: 0.15,
+          score: 0,
+          contribution: 0,
+          description: "Multiple reports of same issue indicate water impact and prevent waste"
+        },
+        areaCriticality: {
+          weight: 0.15,
+          score: 0,
+          contribution: 0,
+          description: "Location importance (hospitals, schools > residential areas)"
+        },
+        reporterTrust: {
+          weight: 0.10,
+          score: 0,
+          contribution: 0,
+          description: "Reporter's historical accuracy reduces spam and fake reports"
+        },
+        aiSeverity: {
+          weight: 0.10,
+          score: 0,
+          contribution: 0,
+          description: "AI analysis of hazard level from photos and description"
+        },
+        age: {
+          weight: 0.10,
+          score: 0,
+          contribution: 0,
+          description: "Older unresolved issues automatically climb priority"
+        },
+        proofCompleteness: {
+          weight: 0.07,
+          score: 0,
+          contribution: 0,
+          description: "Well-documented reports (photo, description, GPS) are easier to act on"
+        },
+        eventFlag: {
+          weight: 0.03,
+          score: 0,
+          contribution: 0,
+          description: "Special situation flag (festival, emergency, election period)"
+        }
+      },
+      totalScore: 0,
+      formula: "Priority Score = (0.30×U)+(0.15×D)+(0.15×C)+(0.10×T)+(0.10×S)+(0.10×A)+(0.07×P)+(0.03×E)"
     };
   }
   
@@ -232,7 +325,7 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-600">Ward</label>
-                      <p className="text-gray-900 mt-1">{report.ward}</p>
+                      <p className="text-gray-900 mt-1">{report.ward?.name || 'N/A'}</p>
                     </div>
                   </div>
                 </div>
@@ -275,26 +368,55 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
                 </div>
               </Card>
             </div>
-
-            {/* Interactive Map */}
-            <Card className="p-6">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <MapPin className="w-5 h-5" />
-                Location on Map
-              </h3>
-              <div className="w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center border">
-                <div className="text-center text-gray-500">
-                  <MapPin className="w-12 h-12 mx-auto mb-2" />
-                  <p>Interactive map showing exact location</p>
-                  <p className="text-sm">Coordinates: 28.6139°N, 77.2090°E</p>
-                </div>
-              </div>
-            </Card>
           </TabsContent>
 
           {/* Status & Actions Tab */}
           <TabsContent value="status" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Location Map */}
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <MapPin className="w-5 h-5" />
+                  Report Location
+                </h3>
+                <div className="space-y-4">
+                  <div className="h-64 rounded-lg overflow-hidden border">
+                    <MapContainer
+                      center={[report.latitude || 28.6139, report.longitude || 77.2090]}
+                      zoom={15}
+                      style={{ height: '100%', width: '100%' }}
+                    >
+                      <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                      />
+                      <Marker position={[report.latitude || 28.6139, report.longitude || 77.2090]}>
+                        <Popup>
+                          <div className="text-sm">
+                            <strong>{report.title}</strong><br />
+                            {report.address || report.location}<br />
+                            Status: {report.status}<br />
+                            Priority: {report.priorityScore || 'N/A'}
+                          </div>
+                        </Popup>
+                      </Marker>
+                    </MapContainer>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <label className="text-xs font-medium text-gray-600">Coordinates</label>
+                      <p className="text-gray-900 mt-1">
+                        {report.latitude?.toFixed(4) || '28.6139'}, {report.longitude?.toFixed(4) || '77.2090'}
+                      </p>
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-gray-600">Accuracy</label>
+                      <p className="text-gray-900 mt-1">±5 meters</p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
               {/* Current Status */}
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
@@ -309,91 +431,124 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
                   <div>
                     <label className="text-sm font-medium text-gray-600">Progress</label>
                     <div className="mt-2">
-                      <Progress value={65} className="h-3" />
-                      <p className="text-sm text-gray-600 mt-1">65% Complete</p>
+                      <Progress value={report.status === 'RESOLVED' ? 100 : report.status === 'IN_PROGRESS' ? 60 : 20} className="h-3" />
+                      <p className="text-sm text-gray-600 mt-1">
+                        {report.status === 'RESOLVED' ? '100%' : report.status === 'IN_PROGRESS' ? '60%' : '20%'} Complete
+                      </p>
                     </div>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-600">Expected Resolution</label>
-                    <p className="text-gray-900 mt-1">Within 7-10 business days</p>
+                    <p className="text-gray-900 mt-1">
+                      {report.status === 'RESOLVED' ? 'Completed' : 'Within 7-10 business days'}
+                    </p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-gray-600">Last Updated</label>
-                    <p className="text-gray-900 mt-1">2 days ago</p>
+                    <p className="text-gray-900 mt-1">
+                      {new Date(report.updatedAt || report.date).toLocaleDateString('en-IN')}
+                    </p>
                   </div>
                 </div>
               </Card>
+            </div>
 
-              {/* Assigned Officer */}
+            {/* Assigned Contractor */}
+            {assignedContractor && (
               <Card className="p-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  Assigned Officer
+                  <Building className="w-5 h-5" />
+                  Assigned Contractor
                 </h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <User className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                      <Building className="w-6 h-6 text-green-600" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{officer.name}</p>
-                      <p className="text-sm text-gray-600">{officer.designation}</p>
+                      <p className="font-medium text-gray-900">{assignedContractor.contractor_name}</p>
+                      <p className="text-sm text-gray-600">{assignedContractor.business_name}</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm font-medium text-gray-600">Department</label>
-                      <p className="text-gray-900 mt-1 flex items-center gap-2">
-                        <Building className="w-4 h-4" />
-                        {officer.department}
-                      </p>
+                      <p className="text-gray-900 mt-1">{assignedContractor.department}</p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-600">Rating</label>
+                      <p className="text-gray-900 mt-1">⭐ {assignedContractor.avg_rating}/5.0</p>
                     </div>
                     <div>
                       <label className="text-sm font-medium text-gray-600">Public Contact</label>
                       <p className="text-gray-900 mt-1 flex items-center gap-2">
                         <Phone className="w-4 h-4" />
-                        {officer.phone}
+                        {assignedContractor.contact_phone}
                       </p>
                     </div>
                     <div>
-                      <label className="text-sm font-medium text-gray-600">Experience</label>
-                      <p className="text-gray-900 mt-1">{officer.experience}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Zone</label>
-                      <p className="text-gray-900 mt-1">{officer.zone}</p>
+                      <label className="text-sm font-medium text-gray-600">Completion Rate</label>
+                      <p className="text-gray-900 mt-1">{(assignedContractor.on_time_rate * 100).toFixed(0)}% on time</p>
                     </div>
                   </div>
-                  <Button className="w-full mt-4" variant="outline">
-                    <Phone className="w-4 h-4 mr-2" />
-                    Contact Officer
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button className="flex-1" variant="outline" size="sm">
+                      <Phone className="w-4 h-4 mr-2" />
+                      Call Contractor
+                    </Button>
+                    <Button className="flex-1" variant="outline" size="sm">
+                      <User className="w-4 h-4 mr-2" />
+                      View Profile
+                    </Button>
+                  </div>
                 </div>
               </Card>
-            </div>
+            )}
 
-            {/* Department Assignment */}
+            {/* Assigned Officer */}
             <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <Building className="w-5 h-5" />
-                Department Assignment
+                <User className="w-5 h-5" />
+                Assigned Officer
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <Building className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                  <p className="font-medium">Primary Department</p>
-                  <p className="text-sm text-gray-600">Public Works Dept.</p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <User className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">{officer.name}</p>
+                    <p className="text-sm text-gray-600">{officer.designation}</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <User className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                  <p className="font-medium">Support Team</p>
-                  <p className="text-sm text-gray-600">Traffic Management</p>
+                <div className="grid grid-cols-1 gap-3">
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Department</label>
+                    <p className="text-gray-900 mt-1 flex items-center gap-2">
+                      <Building className="w-4 h-4" />
+                      {officer.department}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Public Contact</label>
+                    <p className="text-gray-900 mt-1 flex items-center gap-2">
+                      <Phone className="w-4 h-4" />
+                      {officer.phone}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Experience</label>
+                    <p className="text-gray-900 mt-1">{officer.experience}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-gray-600">Zone</label>
+                    <p className="text-gray-900 mt-1">{officer.zone}</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                  <CheckCircle className="w-8 h-8 text-purple-600 mx-auto mb-2" />
-                  <p className="font-medium">Approval Authority</p>
-                  <p className="text-sm text-gray-600">Ward Supervisor</p>
-                </div>
+                <Button className="w-full mt-4" variant="outline">
+                  <Phone className="w-4 h-4 mr-2" />
+                  Contact Officer
+                </Button>
               </div>
             </Card>
           </TabsContent>
@@ -478,37 +633,40 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
 
               {/* Parameter Breakdown */}
               <div className="space-y-4">
-                {Object.entries(scoringBreakdown.breakdown).map(([key, param]) => (
-                  <div key={key} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div>
-                        <h4 className="font-medium capitalize text-gray-900">
-                          {key.replace(/([A-Z])/g, ' $1').trim()}
-                        </h4>
-                        <p className="text-sm text-gray-600">{param.description}</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-gray-900">
-                          {Math.round(param.contribution * 100)}
+                {Object.entries(scoringBreakdown.breakdown).map(([key, param]) => {
+                  const item = param as ScoringBreakdownItem;
+                  return (
+                    <div key={key} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div>
+                          <h4 className="font-medium capitalize text-gray-900">
+                            {key.replace(/([A-Z])/g, ' $1').trim()}
+                          </h4>
+                          <p className="text-sm text-gray-600">{item.description}</p>
                         </div>
-                        <div className="text-xs text-gray-500">
-                          {(param.weight * 100).toFixed(0)}% × {(param.score * 100).toFixed(0)}%
+                        <div className="text-right">
+                          <div className="text-lg font-bold text-gray-900">
+                            {Math.round(item.contribution * 100)}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {(item.weight * 100).toFixed(0)}% × {(item.score * 100).toFixed(0)}%
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex-1">
+                          <Progress 
+                            value={item.score * 100} 
+                            className="h-2" 
+                          />
+                        </div>
+                        <div className="text-sm font-medium text-gray-600 min-w-0">
+                          {(item.score * 100).toFixed(1)}%
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="flex-1">
-                        <Progress 
-                          value={param.score * 100} 
-                          className="h-2" 
-                        />
-                      </div>
-                      <div className="text-sm font-medium text-gray-600 min-w-0">
-                        {(param.score * 100).toFixed(1)}%
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               {/* Transparency Note */}

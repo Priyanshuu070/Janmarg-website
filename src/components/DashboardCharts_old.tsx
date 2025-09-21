@@ -210,7 +210,7 @@ const DashboardCharts: React.FC = () => {
                   <div className="flex items-center gap-4 text-xs text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <MapPin className="w-3 h-3" />
-                      {report.ward}
+                      {report.ward?.name || 'N/A'}
                     </div>
                     <div className="flex items-center gap-1">
                       <User className="w-3 h-3" />

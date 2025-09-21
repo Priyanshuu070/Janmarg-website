@@ -87,6 +87,7 @@ interface ReportCardProps {
   onView?: (reportId: string) => void;
   onEdit?: (reportId: string) => void;
   onUpvote?: (reportId: string) => void;
+  onConvertToTender?: (report: Report) => void;
   className?: string;
 }
 
@@ -144,6 +145,7 @@ export const ReportCard: React.FC<ReportCardProps> = ({
   onView,
   onEdit,
   onUpvote,
+  onConvertToTender,
   className = ""
 }) => {
   const statusColors = getBadgeColors.status(report.status);
@@ -320,6 +322,17 @@ export const ReportCard: React.FC<ReportCardProps> = ({
               <Eye className="w-3 h-3" />
               View
             </Button>
+            {onConvertToTender && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onConvertToTender(report)}
+                className="flex items-center gap-1 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"
+              >
+                <FileText className="w-3 h-3" />
+                Convert to Tender
+              </Button>
+            )}
             {onEdit && (
               <Button
                 variant="outline"
