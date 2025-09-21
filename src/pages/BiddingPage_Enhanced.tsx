@@ -432,7 +432,7 @@ const BiddingPage: React.FC = () => {
                       <div className="text-sm text-muted-foreground">{report.zone}</div>
                     </div>
                   </TableCell>
-                  <TableCell>{report.department}</TableCell>
+                  <TableCell>{report.department?.name || 'N/A'}</TableCell>
                   <TableCell>
                     <div>
                       <div className="font-medium">{formatCurrency(report.estimatedBudget)}</div>

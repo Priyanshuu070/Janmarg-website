@@ -31,6 +31,8 @@ import mockReportsData from "@/data/mockReports.json";
 import { 
   getPriorityLevel
 } from "@/lib/reportScoring";
+import { convertReportToTender } from "@/data/biddingData";
+import { useNavigate } from "react-router-dom";
 
 const ReportsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,6 +43,8 @@ const ReportsPage: React.FC = () => {
   const [selectedReport, setSelectedReport] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const reportsPerPage = 15;
+
+  const navigate = useNavigate();
 
   // Process reports with priority levels from data
   const processedReports = useMemo(() => {
@@ -135,6 +139,24 @@ const ReportsPage: React.FC = () => {
 
   const handleReportEdit = (reportId: string) => {
     console.log("Editing report:", reportId);
+  };
+
+  const handleConvertToTender = (report: any) => {
+    // Convert the report to a tender
+    const tender = convertReportToTender(report);
+    
+    // In a real app, this would be saved to the database
+    // For now, we'll just navigate to the bidding page with a success message
+    console.log("Converting report to tender:", tender);
+    
+    // Navigate to bidding page
+    navigate('/bidding');
+    
+    // Show success message (this would be handled by the bidding page)
+    setTimeout(() => {
+      // This is a workaround - in a real app, you'd use a global state management solution
+      alert(`Report "${report.title}" has been converted to a tender and is now open for bidding!`);
+    }, 1000);
   };
 
   return (
@@ -422,6 +444,7 @@ const ReportsPage: React.FC = () => {
                           onView={handleReportView}
                           onUpvote={handleReportUpvote}
                           onEdit={handleReportEdit}
+                          onConvertToTender={handleConvertToTender}
                         />
                         {/* Priority Score Overlay */}
                         <div className="absolute top-4 right-4">

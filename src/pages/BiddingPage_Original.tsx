@@ -421,7 +421,7 @@ const BiddingPage: React.FC = () => {
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>{report.department}</TableCell>
+                <TableCell>{report.department?.name || 'N/A'}</TableCell>
                 <TableCell>
                   ₹{report.estimatedBudget.toLocaleString()}
                 </TableCell>
