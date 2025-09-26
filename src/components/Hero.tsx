@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Shield, Lock, Eye, EyeOff } from "lucide-react";
+import { Shield, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,12 +10,78 @@ const Hero = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add authentication logic here
-    navigate("/dashboard");
+    
+    // Simulate real-world authentication delay (3-5 seconds)
+    const authDelay = Math.random() * 2000 + 3000; // 3-5 seconds
+    setIsLoading(true);
+    
+    await new Promise((resolve) => setTimeout(resolve, authDelay));
+    
+    // Verify credentials using switch case for better structure
+    const loginEmail = email.toLowerCase();
+    const loginPassword = password;
+    let isValidCredentials = false;
+    let userRole = '';
+    let userDepartment = '';
+
+    switch (loginEmail) {
+      case 'admin@gov.in':
+        if (loginPassword === 'admin@321') {
+          isValidCredentials = true;
+          userRole = 'Administrator';
+          userDepartment = 'System Administration';
+        }
+        break;
+      case 'engineer@gov.in':
+        if (loginPassword === 'eng123') {
+          isValidCredentials = true;
+          userRole = 'Municipal Engineer';
+          userDepartment = 'Engineering & Infrastructure';
+        }
+        break;
+      case 'supervisor@gov.in':
+        if (loginPassword === 'sup123') {
+          isValidCredentials = true;
+          userRole = 'Field Supervisor';
+          userDepartment = 'Field Operations';
+        }
+        break;
+      case 'manager@gov.in':
+        if (loginPassword === 'mgr123') {
+          isValidCredentials = true;
+          userRole = 'Department Manager';
+          userDepartment = 'Public Works';
+        }
+        break;
+      case 'clerk@gov.in':
+        if (loginPassword === 'clk123') {
+          isValidCredentials = true;
+          userRole = 'Administrative Clerk';
+          userDepartment = 'Administration';
+        }
+        break;
+      default:
+        isValidCredentials = false;
+    }
+
+    setIsLoading(false);
+
+    if (isValidCredentials) {
+      // Store user info in localStorage for session management
+      localStorage.setItem('userRole', userRole);
+      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userDepartment', userDepartment);
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('loginTime', new Date().toISOString());
+      navigate("/dashboard");
+    } else {
+      alert("Invalid credentials! Please check your email and password.\n\nFor trial access, use:\nEmail: admin@gov.in\nPassword: admin123");
+    }
   };
   
   return (
@@ -24,8 +90,8 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - Login Form */}
           <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center space-x-2 bg-blue-50 rounded-full px-4 py-2 mb-4">
+            <div className="space-y-2">
+              <div className="inline-flex items-center space-x-2 bg-blue-50 rounded-full px-4 py-2 mt-2">
                 <Shield className="w-4 h-4 text-blue-600" />
                 <span className="text-sm font-medium text-blue-700">Secure Administrator Access</span>
               </div>
@@ -36,13 +102,28 @@ const Hero = () => {
                 </span>
               </h1>
               
-              <p className="text-xl text-gray-600 font-light max-w-lg">
+              <p className="text-md text-gray-600 font-light max-w-lg">
                 Secure access for Janmarg administrators to manage reports and oversee community solutions.
               </p>
             </div>
 
             {/* Login Form */}
-            <Card className="p-8 shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+            <Card className="p-5 shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+              {/* Trial Credentials Info */}
+              <div className="mb-2 p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-xl">
+                <div className="flex items-center justify-center mb-3">
+                  <Shield className="w-5 h-5 text-blue-600 mr-2" />
+                  <span className="text-sm font-bold text-blue-800">Demo Accounts</span>
+                </div>
+                <div className="grid grid-cols-1 gap-2 text-sm">
+                  <div className="bg-white rounded-lg p-3 border">
+                    <p className="font-semibold text-blue-800">Administrator</p>
+                    <p className="text-blue-700"><strong>Email:</strong> admin@gov.in</p>
+                    <p className="text-blue-700"><strong>Password:</strong> admin@321</p>
+                  </div>
+                </div>
+              </div>
+
               <form onSubmit={handleLogin} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="email" className="text-gray-700 font-medium">
@@ -54,13 +135,13 @@ const Hero = () => {
                     placeholder="admin@janmarg.gov"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="h-12 border-gray-200 focus:border-[#2E6A56] focus:ring-[#2E6A56] text-gray-900"
+                    className="h-12 text-gray-400 border-gray-200 focus:border-[#2E6A56] focus:ring-[#2E6A56] focus:text-gray-800"
                     required
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-gray-700 font-medium">
+                  <Label htmlFor="password" className="text-gray-400 focus:text-gray-800 font-medium">
                     Password
                   </Label>
                   <div className="relative">
@@ -85,20 +166,22 @@ const Hero = () => {
 
                 <Button
                   type="submit"
-                  className="w-full h-12 bg-[#2E6A56] hover:bg-[#1f4a3a] text-white font-medium text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                  disabled={isLoading}
+                  className="w-full h-12 bg-[#2E6A56] hover:bg-[#1f4a3a] text-white font-medium text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Lock className="w-5 h-5 mr-2" />
-                  Secure Login
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      <span>Authenticating...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <Lock className="w-5 h-5 mr-2" />
+                      <span>Secure Login</span>
+                    </div>
+                  )}
                 </Button>
                 
-                <div className="text-center">
-                  <a 
-                    href="#" 
-                    className="text-sm text-gray-500 hover:text-[#2E6A56] transition-colors"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
               </form>
             </Card>
           </div>

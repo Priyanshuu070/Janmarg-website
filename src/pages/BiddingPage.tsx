@@ -45,6 +45,7 @@ import {
   EnhancedBid,
   Contractor
 } from "@/data/biddingData";
+import { getForwardedReports } from "@/utils/forwardedReports";
 import { toast } from "sonner";
 
 const BiddingPage: React.FC = () => {
@@ -71,12 +72,18 @@ const BiddingPage: React.FC = () => {
     category: ''
   });
 
+  // Combine mock reports with forwarded reports
+  const allReports = useMemo(() => {
+    const forwarded = getForwardedReports();
+    return [...mockEnhancedReports, ...forwarded];
+  }, []);
+
   // Calculate statistics
-  const stats = useMemo(() => calculateBiddingStats(mockEnhancedReports), []);
+  const stats = useMemo(() => calculateBiddingStats(allReports), [allReports]);
 
   // Filter and search reports
   const filteredReports = useMemo(() => {
-    return mockEnhancedReports.filter(report => {
+    return allReports.filter(report => {
       const matchesStatus = filterStatus === 'all' || report.biddingStatus === filterStatus;
       const matchesSearch = searchQuery === '' ||
         report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -447,6 +454,36 @@ const BiddingPage: React.FC = () => {
                   )}
                 </div>
 
+                {/* Completion Progress for Awarded Tenders */}
+                {report.biddingStatus === 'awarded' && report.completionStatus && (
+                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-blue-900">Work Progress</span>
+                      <Badge variant="outline" className={
+                        report.completionStatus === 'completed' ? 'bg-green-100 text-green-800 border-green-300' :
+                        report.completionStatus === 'in_progress' ? 'bg-blue-100 text-blue-800 border-blue-300' :
+                        'bg-gray-100 text-gray-800 border-gray-300'
+                      }>
+                        {report.completionStatus === 'completed' ? 'Completed' :
+                         report.completionStatus === 'in_progress' ? 'In Progress' :
+                         report.completionStatus === 'not_started' ? 'Not Started' : 'Delayed'}
+                      </Badge>
+                    </div>
+                    <Progress
+                      value={
+                        report.completionStatus === 'completed' ? 100 :
+                        report.completionStatus === 'in_progress' ? 65 :
+                        report.completionStatus === 'not_started' ? 5 : 25
+                      }
+                      className="h-2"
+                    />
+                    <div className="flex items-center justify-between text-xs text-blue-700 mt-1">
+                      <span>Awarded: {report.awardedAt ? formatDate(report.awardedAt.split('T')[0]) : 'N/A'}</span>
+                      <span>{report.awardedBy || 'Municipal Authority'}</span>
+                    </div>
+                  </div>
+                )}
+
                 {/* Actions */}
                 <div className="flex gap-2 pt-2">
                   <Button
@@ -498,7 +535,7 @@ const BiddingPage: React.FC = () => {
 
       {/* Bids Dialog */}
       <Dialog open={showBidsDialog} onOpenChange={setShowBidsDialog}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Gavel className="w-5 h-5" />
@@ -638,7 +675,7 @@ const BiddingPage: React.FC = () => {
 
       {/* Assign Contractor Dialog */}
       <Dialog open={showAssignDialog} onOpenChange={setShowAssignDialog}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Award className="w-5 h-5" />
@@ -854,7 +891,7 @@ const BiddingPage: React.FC = () => {
 
       {/* Create New Tender Dialog */}
       <Dialog open={showCreateTenderDialog} onOpenChange={setShowCreateTenderDialog}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl bg-white border border-gray-200 shadow-xl">
           <DialogHeader>
             <DialogTitle>Create New Tender</DialogTitle>
           </DialogHeader>
@@ -1027,7 +1064,7 @@ const BiddingPage: React.FC = () => {
 
       {/* Contractor Profile Dialog */}
       <Dialog open={showContractorProfile} onOpenChange={setShowContractorProfile}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Building className="w-5 h-5" />

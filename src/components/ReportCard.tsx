@@ -116,6 +116,19 @@ const getStatusIcon = (status: string) => {
   }
 };
 
+const getStatusDisplayText = (status: string) => {
+  switch (status) {
+    case "PENDING_CITIZEN_REVIEW":
+      return "Pending Review";
+    case "IN_PROGRESS":
+      return "In Progress";
+    case "IN_BIDDING":
+      return "In Bidding";
+    default:
+      return status.replace(/_/g, ' ');
+  }
+};
+
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString("en-IN", {
     year: "numeric",
@@ -195,7 +208,7 @@ export const ReportCard: React.FC<ReportCardProps> = ({
               className={`${statusColors} flex items-center gap-1`}
             >
               {getStatusIcon(report.status)}
-              {report.status.replace(/_/g, ' ')}
+              {getStatusDisplayText(report.status)}
             </Badge>
             <Badge className={`px-2 py-1 text-xs font-medium ${getSeverityColor(report.severity)}`}>
               {getSeverityLabel(report.severity)}
@@ -330,7 +343,7 @@ export const ReportCard: React.FC<ReportCardProps> = ({
                 className="flex items-center gap-1 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"
               >
                 <FileText className="w-3 h-3" />
-                Convert to Tender
+                Forward to Bidding
               </Button>
             )}
             {onEdit && (

@@ -8,6 +8,13 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard.tsx";
 import DashboardLogin from "./pages/DashboardLogin.tsx";
+import BiddingPage from "./pages/BiddingPage.tsx";
+import ReportsPage from "./pages/ReportsPage.tsx";
+import ZonesPage from "./pages/ZonesPage.tsx";
+import WardsPage from "./pages/WardsPage.tsx";
+import DepartmentsPage from "./pages/DepartmentsPage.tsx";
+import ExportReportPage from "./pages/ExportReportPage.tsx";
+import SettingsPage from "./pages/SettingsPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +34,13 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<DashboardLogin />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/bidding" element={<BiddingPage />} />
+            <Route path="/zones" element={<ZonesPage />} />
+            <Route path="/wards" element={<WardsPage />} />
+            <Route path="/departments" element={<DepartmentsPage />} />
+            <Route path="/export-report" element={<ExportReportPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

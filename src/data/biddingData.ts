@@ -145,7 +145,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43212',
       email: 'projects@ranchimunicipal.com',
-      address: 'Municipal Office Complex, Ranchi'
+      address: 'Municipal Office Complex, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 175000,
@@ -172,7 +172,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43213',
       email: 'contracts@tatapower.com',
-      address: 'Tata Steel Complex, Jamshedpur'
+      address: 'Tata Steel Complex, Jamshedpur, Jharkhand'
     },
     financials: {
       avgBidAmount: 355000,
@@ -199,7 +199,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43214',
       email: 'emergency@quickfix.com',
-      address: 'Service Center, Industrial Area'
+      address: 'Service Center, Industrial Area, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 155000,
@@ -226,7 +226,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43215',
       email: 'projects@greenvalley.com',
-      address: 'Green Valley Complex, Ranchi'
+      address: 'Green Valley Complex, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 235000,
@@ -253,7 +253,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43216',
       email: 'engineering@metroeng.com',
-      address: 'Engineering Hub, Jamshedpur'
+      address: 'Engineering Hub, Jamshedpur, Jharkhand'
     },
     financials: {
       avgBidAmount: 285000,
@@ -280,7 +280,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43217',
       email: 'development@urbandev.com',
-      address: 'Business District, Ranchi'
+      address: 'Business District, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 330000,
@@ -307,7 +307,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43218',
       email: 'build@precisionbuilders.com',
-      address: 'Construction Plaza, Jamshedpur'
+      address: 'Construction Plaza, Jamshedpur, Jharkhand'
     },
     financials: {
       avgBidAmount: 205000,
@@ -334,7 +334,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43219',
       email: 'elite@eliteconstruction.com',
-      address: 'Elite Tower, Ranchi'
+      address: 'Elite Tower, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 465000,
@@ -361,7 +361,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43220',
       email: 'budget@budgetbuilders.com',
-      address: 'Affordable Housing Complex, Ranchi'
+      address: 'Affordable Housing Complex, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 145000,
@@ -388,7 +388,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43221',
       email: 'tech@techbuild.com',
-      address: 'Innovation Center, Jamshedpur'
+      address: 'Innovation Center, Jamshedpur, Jharkhand'
     },
     financials: {
       avgBidAmount: 295000,
@@ -415,7 +415,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43222',
       email: 'heritage@heritagerestoration.com',
-      address: 'Heritage District, Ranchi'
+      address: 'Heritage District, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 405000,
@@ -442,7 +442,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43223',
       email: 'rapid@rapidresponse.com',
-      address: 'Emergency Services Center, Ranchi'
+      address: 'Emergency Services Center, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 135000,
@@ -469,7 +469,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43224',
       email: 'sustainable@sustainablebuild.com',
-      address: 'Green Building Center, Jamshedpur'
+      address: 'Green Building Center, Jamshedpur, Jharkhand'
     },
     financials: {
       avgBidAmount: 275000,
@@ -496,7 +496,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43225',
       email: 'mega@mega-infra.com',
-      address: 'Infrastructure Plaza, Ranchi'
+      address: 'Infrastructure Plaza, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 435000,
@@ -523,7 +523,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43226',
       email: 'local@localartisans.com',
-      address: 'Community Center, Ranchi'
+      address: 'Community Center, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 185000,
@@ -550,7 +550,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43227',
       email: 'future@futuretech.com',
-      address: 'Tech Park, Jamshedpur'
+      address: 'Tech Park, Jamshedpur, Jharkhand'
     },
     financials: {
       avgBidAmount: 320000,
@@ -577,7 +577,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43228',
       email: 'quality@qualityfirst.com',
-      address: 'Quality Assurance Center, Ranchi'
+      address: 'Quality Assurance Center, Ranchi, Jharkhand'
     },
     financials: {
       avgBidAmount: 255000,
@@ -604,7 +604,7 @@ export const mockContractors: Contractor[] = [
     contact: {
       phone: '+91-98765-43229',
       email: 'express@expressconstruct.com',
-      address: 'Express Services Hub, Jamshedpur'
+      address: 'Express Services Hub, Jamshedpur, Jharkhand'
     },
     financials: {
       avgBidAmount: 125000,
@@ -764,11 +764,16 @@ export const mockEnhancedReports: EnhancedReport[] = [
     location: 'Station Road & Albert Ekka Chowk',
     zone: 'Central Ranchi',
     department: 'Roads & Infrastructure',
-    estimatedBudget: 200000,
+    estimatedBudget: 85000,
+    actualBudget: 92000,
     urgency: 'High',
     deadline: '2025-01-25',
     createdAt: '2025-01-15T10:00:00Z',
-    biddingStatus: 'open',
+    biddingStatus: 'awarded',
+    awardedBidId: 'BID-001',
+    awardedAt: '2025-01-21T10:00:00Z',
+    awardedBy: 'Municipal Engineer - Rajesh Kumar',
+    completionStatus: 'in_progress',
     lastBidAt: '2025-01-20T14:30:00Z',
     category: 'Road Maintenance',
     priorityScore: 85,
@@ -778,12 +783,12 @@ export const mockEnhancedReports: EnhancedReport[] = [
         reportId: 'RPT-001',
         contractorId: 'CONT-001',
         contractor: mockContractors[0],
-        amount: 175000,
+        amount: 78000,
         estimatedDuration: 3,
         timeline: '3 days',
         submittedAt: '2025-01-18T09:30:00Z',
         lastUpdatedAt: '2025-01-18T09:30:00Z',
-        status: 'pending',
+        status: 'accepted',
         proposal: 'We will use high-grade asphalt and complete the work during off-peak hours to minimize traffic disruption.',
         warranty: '2 years',
         materials: ['High-grade Asphalt', 'Road Marking Paint', 'Traffic Cones'],
@@ -913,11 +918,16 @@ export const mockEnhancedReports: EnhancedReport[] = [
     location: 'Multiple Intersections - City Center',
     zone: 'Central Ranchi',
     department: 'Traffic & Transportation',
-    estimatedBudget: 180000,
+    estimatedBudget: 125000,
+    actualBudget: 118000,
     urgency: 'Medium',
     deadline: '2025-02-10',
     createdAt: '2025-01-18T09:00:00Z',
-    biddingStatus: 'open',
+    biddingStatus: 'awarded',
+    awardedBidId: 'BID-011',
+    awardedAt: '2025-01-23T11:00:00Z',
+    awardedBy: 'Traffic Engineer - Priya Singh',
+    completionStatus: 'completed',
     lastBidAt: '2025-01-22T13:20:00Z',
     category: 'Traffic Infrastructure',
     priorityScore: 68,
@@ -927,12 +937,12 @@ export const mockEnhancedReports: EnhancedReport[] = [
         reportId: 'RPT-005',
         contractorId: 'CONT-005',
         contractor: mockContractors[4],
-        amount: 165000,
+        amount: 112000,
         estimatedDuration: 4,
         timeline: '4 days',
         submittedAt: '2025-01-20T10:45:00Z',
         lastUpdatedAt: '2025-01-20T10:45:00Z',
-        status: 'pending',
+        status: 'accepted',
         proposal: 'Comprehensive traffic signal maintenance with LED upgrades.',
         warranty: '2 years',
         materials: ['LED Signal Heads', 'Controller Units', 'Cable Infrastructure'],
@@ -1038,7 +1048,7 @@ export const mockEnhancedReports: EnhancedReport[] = [
     title: 'School Building Repairs',
     description: 'Structural repairs and maintenance for Government School Building',
     location: 'Sector 4 Government School',
-    zone: 'Education District',
+    zone: 'Doranda Education Zone',
     department: 'Education Infrastructure',
     estimatedBudget: 550000,
     urgency: 'High',
@@ -1246,7 +1256,7 @@ export const mockEnhancedReports: EnhancedReport[] = [
     title: 'Park Bench Installation',
     description: 'Install weather-resistant benches and picnic tables in city parks',
     location: 'Multiple City Parks',
-    zone: 'Various Zones',
+    zone: 'Multiple Ranchi Zones',
     department: 'Parks & Recreation',
     estimatedBudget: 150000,
     urgency: 'Low',
@@ -1293,7 +1303,7 @@ export const mockEnhancedReports: EnhancedReport[] = [
     title: 'Road Resurfacing Project',
     description: 'Complete resurfacing of main arterial road with traffic management',
     location: 'NH-33 Highway Section',
-    zone: 'Highway District',
+    zone: 'NH-33 Highway Zone',
     department: 'Roads & Infrastructure',
     estimatedBudget: 2500000,
     urgency: 'High',
@@ -1361,7 +1371,7 @@ export const mockEnhancedReports: EnhancedReport[] = [
     title: 'Water Tank Cleaning',
     description: 'Professional cleaning and disinfection of overhead water tanks',
     location: 'Multiple Residential Complexes',
-    zone: 'Various Zones',
+    zone: 'Ranchi Residential Zones',
     department: 'Water Supply & Sanitation',
     estimatedBudget: 120000,
     urgency: 'Medium',
@@ -1464,17 +1474,31 @@ export const convertReportToTender = (report: any): EnhancedReport => {
   else if (report.priorityScore >= 45) urgency = 'Medium';
   else urgency = 'Low';
 
-  // Estimate budget based on issue type and severity
-  let estimatedBudget = 50000; // Default
+  // Estimate budget based on issue type and severity - More realistic Jharkhand pricing
+  let estimatedBudget = 25000; // Base minimum for small repairs
   const issueType = report.issueType?.title?.toLowerCase() || '';
-  if (issueType.includes('road') || issueType.includes('pothole')) estimatedBudget = 150000;
-  else if (issueType.includes('streetlight') || issueType.includes('electric')) estimatedBudget = 80000;
-  else if (issueType.includes('water') || issueType.includes('drainage')) estimatedBudget = 120000;
-  else if (issueType.includes('park') || issueType.includes('garden')) estimatedBudget = 200000;
-  else if (issueType.includes('building') || issueType.includes('construction')) estimatedBudget = 500000;
+  const location = report.ward?.name?.toLowerCase() || '';
+  
+  // Road and infrastructure work
+  if (issueType.includes('road') || issueType.includes('pothole') || issueType.includes('asphalt')) {
+    estimatedBudget = location.includes('main') || location.includes('highway') ? 150000 : 75000;
+  } else if (issueType.includes('streetlight') || issueType.includes('electric') || issueType.includes('lighting')) {
+    estimatedBudget = 45000;
+  } else if (issueType.includes('water') || issueType.includes('drainage') || issueType.includes('sewage')) {
+    estimatedBudget = 85000;
+  } else if (issueType.includes('park') || issueType.includes('garden') || issueType.includes('tree')) {
+    estimatedBudget = 35000;
+  } else if (issueType.includes('building') || issueType.includes('construction') || issueType.includes('repair')) {
+    estimatedBudget = 200000;
+  } else if (issueType.includes('traffic') || issueType.includes('signal')) {
+    estimatedBudget = 120000;
+  } else if (issueType.includes('sanitation') || issueType.includes('waste')) {
+    estimatedBudget = 55000;
+  }
 
-  // Adjust budget based on severity
-  estimatedBudget = Math.round(estimatedBudget * (1 + (report.severity || 5) / 20));
+  // Adjust budget based on severity (1-10 scale)
+  const severityMultiplier = 1 + ((report.severity || 5) - 5) * 0.15;
+  estimatedBudget = Math.round(estimatedBudget * severityMultiplier);
 
   // Calculate deadline (30 days from now for high priority, 60 for medium, 90 for low)
   const deadlineDays = urgency === 'Critical' ? 15 : urgency === 'High' ? 30 : urgency === 'Medium' ? 60 : 90;
@@ -1495,6 +1519,7 @@ export const convertReportToTender = (report: any): EnhancedReport => {
     biddingStatus: 'open',
     category: report.issueType?.title || 'General Maintenance',
     priorityScore: report.priorityScore || 50,
+    completionStatus: 'not_started',
     bids: []
   };
 };

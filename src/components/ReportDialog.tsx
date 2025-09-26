@@ -259,7 +259,7 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
                   <div>
                     <div className="text-sm font-medium text-gray-600">Priority Score</div>
                     <div className={`text-2xl font-bold ${priorityInfo.color}`}>
-                      {report.priorityScore}
+                      {report.priorityScore || scoringBreakdown.totalScore || 0}
                     </div>
                   </div>
                 </div>
@@ -272,60 +272,129 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-6">
-            <TabsTrigger value="details" className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" />
-              Details
-            </TabsTrigger>
-            <TabsTrigger value="status" className="flex items-center gap-2">
-              <Building className="w-4 h-4" />
-              Status & Actions
-            </TabsTrigger>
-            <TabsTrigger value="history" className="flex items-center gap-2">
-              <Clock className="w-4 h-4" />
-              History
-            </TabsTrigger>
-            <TabsTrigger value="scoring" className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4" />
-              Scoring
-            </TabsTrigger>
-          </TabsList>
+          <div className="border-b border-gray-200 mb-6">
+            <nav className="flex space-x-8">
+              <button
+                onClick={() => setActiveTab("details")}
+                className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === "details"
+                    ? "border-blue-500 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+              >
+                <MapPin className="w-4 h-4" />
+                Details
+              </button>
+              <button
+                onClick={() => setActiveTab("status")}
+                className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === "status"
+                    ? "border-blue-500 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+              >
+                <Building className="w-4 h-4" />
+                Status & Actions
+              </button>
+              <button
+                onClick={() => setActiveTab("history")}
+                className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === "history"
+                    ? "border-blue-500 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+              >
+                <Clock className="w-4 h-4" />
+                History
+              </button>
+              <button
+                onClick={() => setActiveTab("scoring")}
+                className={`flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeTab === "scoring"
+                    ? "border-blue-500 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+              >
+                <TrendingUp className="w-4 h-4" />
+                Scoring
+              </button>
+            </nav>
+          </div>
 
           {/* Report Details Tab */}
           <TabsContent value="details" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Report Information */}
               <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
                   <FileText className="w-5 h-5" />
                   Report Information
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-6">
+                  {/* Title and Description */}
                   <div>
-                    <label className="text-sm font-medium text-gray-600">Description</label>
-                    <p className="text-gray-900 mt-1">{report.description}</p>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">Issue Title</h4>
+                    <p className="text-gray-900 font-medium">{report.title}</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Category</label>
-                      <p className="text-gray-900 mt-1">{report.category}</p>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Status</label>
-                      <Badge className="mt-1">{report.status}</Badge>
+
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">Description</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg border">
+                      <p className="text-gray-800 leading-relaxed">{report.description}</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Date Reported</label>
-                      <p className="text-gray-900 mt-1 flex items-center gap-2">
+
+                  {/* Key Details Grid */}
+                  <div className="grid grid-cols-1 gap-4">
+                    <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600">Category</span>
+                      <Badge variant="outline" className="font-medium">{report.category || report.issueType?.title || 'General'}</Badge>
+                    </div>
+
+                    <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600">Status</span>
+                      <Badge className={`font-medium ${
+                        report.status === 'RESOLVED' ? 'bg-green-100 text-green-800' :
+                        report.status === 'IN_PROGRESS' ? 'bg-blue-100 text-blue-800' :
+                        report.status === 'ASSIGNED' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>
+                        {report.status.replace('_', ' ')}
+                      </Badge>
+                    </div>
+
+                    <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600">Date Reported</span>
+                      <span className="text-sm text-gray-900 flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
-                        {new Date(report.date).toLocaleDateString('en-IN')}
-                      </p>
+                        {new Date(report.createdAt || report.date).toLocaleDateString('en-IN', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </span>
                     </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-600">Ward</label>
-                      <p className="text-gray-900 mt-1">{report.ward?.name || 'N/A'}</p>
+
+                    <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600">Ward</span>
+                      <span className="text-sm text-gray-900">{report.ward?.name || 'N/A'}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600">Department</span>
+                      <span className="text-sm text-gray-900">{report.department?.name || 'Unassigned'}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between py-3">
+                      <span className="text-sm font-medium text-gray-600">Priority Score</span>
+                      <div className="flex items-center gap-2">
+                        <Badge className={`${priorityInfo.bgColor} ${priorityInfo.color} font-medium`}>
+                          {(report.priorityScore || scoringBreakdown.totalScore || 0)}/100
+                        </Badge>
+                        <span className="text-xs text-gray-500">({priorityInfo.level})</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -333,38 +402,64 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
 
               {/* Location & Media */}
               <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
                   <MapPin className="w-5 h-5" />
                   Location & Evidence
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-6">
+                  {/* Address */}
                   <div>
-                    <label className="text-sm font-medium text-gray-600">Address</label>
-                    <p className="text-gray-900 mt-1">{report.location}</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <label className="text-xs font-medium text-gray-600">Latitude</label>
-                      <p className="text-gray-900">28.6139° N</p>
-                    </div>
-                    <div>
-                      <label className="text-xs font-medium text-gray-600">Longitude</label>
-                      <p className="text-gray-900">77.2090° E</p>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">Location Address</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg border">
+                      <p className="text-gray-800">{report.location || report.address || 'Location not specified'}</p>
                     </div>
                   </div>
+
+                  {/* Coordinates */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3">GPS Coordinates</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                        <div className="text-xs font-medium text-blue-700 mb-1">Latitude</div>
+                        <div className="text-sm font-mono text-blue-900">{report.latitude?.toFixed(6) || '28.613939'}</div>
+                      </div>
+                      <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                        <div className="text-xs font-medium text-blue-700 mb-1">Longitude</div>
+                        <div className="text-sm font-mono text-blue-900">{report.longitude?.toFixed(6) || '77.209021'}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Photo Evidence */}
                   {report.image && (
                     <div>
-                      <label className="text-sm font-medium text-gray-600 flex items-center gap-2 mb-2">
+                      <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
                         <Camera className="w-4 h-4" />
                         Photo Evidence
-                      </label>
-                      <img
-                        src={report.image}
-                        alt="Report evidence"
-                        className="w-full h-48 object-cover rounded-lg border"
-                      />
+                      </h4>
+                      <div className="bg-gray-50 p-4 rounded-lg border">
+                        <img
+                          src={report.image}
+                          alt="Report evidence"
+                          className="w-full h-48 object-cover rounded-lg border shadow-sm"
+                        />
+                      </div>
                     </div>
                   )}
+
+                  {/* Reporter Info */}
+                  <div>
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3">Reported By</h4>
+                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border">
+                      <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <User className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{report.reporter?.name || 'Anonymous'}</p>
+                        <p className="text-sm text-gray-600">Citizen Report</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Card>
             </div>
@@ -419,35 +514,73 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
 
               {/* Current Status */}
               <Card className="p-6">
-                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
                   <AlertCircle className="w-5 h-5" />
-                  Current Status
+                  Current Status & Progress
                 </h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">Status</label>
-                    <Badge className="mt-1 text-lg px-3 py-1">{report.status}</Badge>
+                <div className="space-y-6">
+                  {/* Status Badge */}
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-gray-600">Current Status</label>
+                    <Badge className={`text-lg px-4 py-2 ${
+                      report.status === 'RESOLVED' ? 'bg-green-100 text-green-800' :
+                      report.status === 'IN_PROGRESS' ? 'bg-blue-100 text-blue-800' :
+                      report.status === 'ASSIGNED' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-gray-100 text-gray-800'
+                    }`}>
+                      {report.status.replace('_', ' ')}
+                    </Badge>
                   </div>
+
+                  {/* Progress Bar */}
                   <div>
-                    <label className="text-sm font-medium text-gray-600">Progress</label>
-                    <div className="mt-2">
-                      <Progress value={report.status === 'RESOLVED' ? 100 : report.status === 'IN_PROGRESS' ? 60 : 20} className="h-3" />
-                      <p className="text-sm text-gray-600 mt-1">
-                        {report.status === 'RESOLVED' ? '100%' : report.status === 'IN_PROGRESS' ? '60%' : '20%'} Complete
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="text-sm font-medium text-gray-600">Progress</label>
+                      <span className="text-sm font-medium text-gray-900">
+                        {report.status === 'RESOLVED' ? '100%' :
+                         report.status === 'IN_PROGRESS' ? '60%' :
+                         report.status === 'ASSIGNED' ? '40%' : '20%'} Complete
+                      </span>
+                    </div>
+                    <Progress
+                      value={report.status === 'RESOLVED' ? 100 :
+                             report.status === 'IN_PROGRESS' ? 60 :
+                             report.status === 'ASSIGNED' ? 40 : 20}
+                      className="h-3"
+                    />
+                  </div>
+
+                  {/* Timeline */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium text-gray-600">Reported</label>
+                      <p className="text-gray-900 mt-1 flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {new Date(report.createdAt || report.date).toLocaleDateString('en-IN')}
+                      </p>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-gray-600">Last Updated</label>
+                      <p className="text-gray-900 mt-1 flex items-center gap-2">
+                        <Clock className="w-4 h-4" />
+                        {new Date(report.updatedAt || report.date).toLocaleDateString('en-IN')}
                       </p>
                     </div>
                   </div>
+
+                  {/* Expected Resolution */}
                   <div>
                     <label className="text-sm font-medium text-gray-600">Expected Resolution</label>
-                    <p className="text-gray-900 mt-1">
-                      {report.status === 'RESOLVED' ? 'Completed' : 'Within 7-10 business days'}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-gray-600">Last Updated</label>
-                    <p className="text-gray-900 mt-1">
-                      {new Date(report.updatedAt || report.date).toLocaleDateString('en-IN')}
-                    </p>
+                    <div className="mt-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <p className="text-blue-800 text-sm">
+                        {report.status === 'RESOLVED'
+                          ? '✅ Issue has been resolved and completed'
+                          : report.status === 'IN_PROGRESS'
+                          ? '🔄 Work is currently in progress. Expected completion within 3-5 business days.'
+                          : '⏳ Issue is being reviewed. Initial response expected within 24-48 hours.'
+                        }
+                      </p>
+                    </div>
                   </div>
                 </div>
               </Card>
@@ -621,7 +754,7 @@ const ReportDialog: React.FC<ReportDialogProps> = ({ report, isOpen, onClose }) 
                     <div>
                       <div className="text-sm font-medium text-gray-600">Total Priority Score</div>
                       <div className={`text-3xl font-bold ${priorityInfo.color}`}>
-                        {scoringBreakdown.totalScore}/100
+                        {isNaN(scoringBreakdown.totalScore) ? (report.priorityScore || 0) : scoringBreakdown.totalScore}/100
                       </div>
                     </div>
                   </div>

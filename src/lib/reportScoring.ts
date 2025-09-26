@@ -120,6 +120,18 @@ export function generateReportScoring(reportData: any): ScoringParameters {
   const isHighPriority = Math.random() > 0.7;
   const isMediumPriority = Math.random() > 0.5;
   
+  // Calculate age safely
+  let age = 0;
+  try {
+    const reportDate = new Date(reportData.date || reportData.createdAt);
+    if (!isNaN(reportDate.getTime())) {
+      const ageInMs = new Date().getTime() - reportDate.getTime();
+      age = Math.min(1.0, ageInMs / (1000 * 60 * 60 * 24 * 30)); // Age in months
+    }
+  } catch (error) {
+    age = 0; // Default to 0 if date parsing fails
+  }
+  
   return {
     urgency: isHighPriority ? 0.8 + Math.random() * 0.2 : 
              isMediumPriority ? 0.5 + Math.random() * 0.3 : 
@@ -130,7 +142,7 @@ export function generateReportScoring(reportData: any): ScoringParameters {
                      0.3 + Math.random() * 0.4,
     reporterTrust: 0.6 + Math.random() * 0.4, // Most reporters are trustworthy
     aiSeverity: Math.random(),
-    age: Math.min(1.0, (new Date().getTime() - new Date(reportData.date).getTime()) / (1000 * 60 * 60 * 24 * 30)), // Age in months
+    age: age,
     proofCompleteness: reportData.image ? 0.7 + Math.random() * 0.3 : 0.3 + Math.random() * 0.4,
     eventFlag: Math.random() > 0.8 ? 1 : 0 // 20% chance of special event
   };

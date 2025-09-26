@@ -7,6 +7,7 @@ import { getBadgeColors } from "@/lib/badgeColors";
 import ReportMap from "@/components/ReportMap";
 import ReportCard from "@/components/ReportCard";
 import ReportDialog from "@/components/ReportDialog";
+import ReportsOverviewMap from "@/components/ReportsOverviewMap";
 import {
   Select,
   SelectContent,
@@ -26,19 +27,26 @@ import {
   Download,
   TrendingUp,
   Target,
+  Eye,
+  FileText,
 } from "lucide-react";
 import mockReportsData from "@/data/mockReports.json";
 import { 
   getPriorityLevel
 } from "@/lib/reportScoring";
 import { convertReportToTender } from "@/data/biddingData";
+import { addForwardedReport, isReportForwarded } from "@/utils/forwardedReports";
 import { useNavigate } from "react-router-dom";
 
 const ReportsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [severityFilter, setSeverityFilter] = useState("all");
-  const [viewMode, setViewMode] = useState<"leaderboard" | "grid" | "list">("leaderboard");
+  const [departmentFilter, setDepartmentFilter] = useState("all");
+  const [wardFilter, setWardFilter] = useState("all");
+  const [dateFilter, setDateFilter] = useState("all");
+  const [issueTypeFilter, setIssueTypeFilter] = useState("all");
+  const [viewMode, setViewMode] = useState<"leaderboard" | "grid">("leaderboard");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedReport, setSelectedReport] = useState<any>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -48,12 +56,14 @@ const ReportsPage: React.FC = () => {
 
   // Process reports with priority levels from data
   const processedReports = useMemo(() => {
-    return mockReportsData.reports.map((report: any) => {
-      return {
-        ...report,
-        priorityLevel: getPriorityLevel(report.priorityScore || 0)
-      };
-    });
+    return mockReportsData.reports
+      .filter((report: any) => !isReportForwarded(`TENDER-${report.id}`))
+      .map((report: any) => {
+        return {
+          ...report,
+          priorityLevel: getPriorityLevel(report.priorityScore || 0)
+        };
+      });
   }, []);
 
   // Sort reports by priority score (leaderboard style)
@@ -99,8 +109,45 @@ const ReportsPage: React.FC = () => {
       });
     }
 
+    // Department filter
+    if (departmentFilter !== "all") {
+      filtered = filtered.filter((report) =>
+        report.department?.name.toLowerCase() === departmentFilter.toLowerCase()
+      );
+    }
+
+    // Ward filter
+    if (wardFilter !== "all") {
+      filtered = filtered.filter((report) =>
+        report.ward?.name.toLowerCase() === wardFilter.toLowerCase()
+      );
+    }
+
+    // Date filter
+    if (dateFilter !== "all") {
+      const now = new Date();
+      const reportDate = new Date(report.createdAt);
+      const diffTime = Math.abs(now.getTime() - reportDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (dateFilter === "today") {
+        filtered = filtered.filter(() => diffDays === 0);
+      } else if (dateFilter === "week") {
+        filtered = filtered.filter(() => diffDays <= 7);
+      } else if (dateFilter === "month") {
+        filtered = filtered.filter(() => diffDays <= 30);
+      }
+    }
+
+    // Issue type filter
+    if (issueTypeFilter !== "all") {
+      filtered = filtered.filter((report) =>
+        report.issueType?.title.toLowerCase() === issueTypeFilter.toLowerCase()
+      );
+    }
+
     return filtered;
-  }, [sortedReports, searchQuery, statusFilter, severityFilter]);
+  }, [sortedReports, searchQuery, statusFilter, severityFilter, departmentFilter, wardFilter, dateFilter, issueTypeFilter]);
 
   // Pagination
   const totalPages = Math.ceil(filteredReports.length / reportsPerPage);
@@ -141,22 +188,73 @@ const ReportsPage: React.FC = () => {
     console.log("Editing report:", reportId);
   };
 
-  const handleConvertToTender = (report: any) => {
+  const handleExportCSV = () => {
+    // Create CSV content from filtered reports
+    const headers = [
+      'ID',
+      'Title',
+      'Description',
+      'Status',
+      'Priority Score',
+      'Priority Level',
+      'Reporter',
+      'Ward',
+      'Department',
+      'Created Date',
+      'Latitude',
+      'Longitude',
+      'Address',
+      'Upvotes'
+    ];
+
+    const csvContent = [
+      headers.join(','),
+      ...filteredReports.map(report => [
+        report.id,
+        `"${report.title.replace(/"/g, '""')}"`,
+        `"${(report.description || '').replace(/"/g, '""')}"`,
+        report.status,
+        report.priorityScore || 0,
+        report.priorityLevel?.level || 'Unknown',
+        `"${report.reporter?.name || ''}"`,
+        `"${report.ward?.name || ''}"`,
+        `"${report.department?.name || ''}"`,
+        new Date(report.createdAt).toLocaleDateString('en-IN'),
+        report.latitude || '',
+        report.longitude || '',
+        `"${report.address || ''}"`,
+        report.upvotes || 0
+      ].join(','))
+    ].join('\n');
+
+    // Create and download the file
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `reports_export_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleForwardToBidding = (report: any) => {
     // Convert the report to a tender
     const tender = convertReportToTender(report);
-    
-    // In a real app, this would be saved to the database
-    // For now, we'll just navigate to the bidding page with a success message
-    console.log("Converting report to tender:", tender);
-    
-    // Navigate to bidding page
-    navigate('/bidding');
-    
-    // Show success message (this would be handled by the bidding page)
-    setTimeout(() => {
-      // This is a workaround - in a real app, you'd use a global state management solution
-      alert(`Report "${report.title}" has been converted to a tender and is now open for bidding!`);
-    }, 1000);
+
+    // Add to forwarded reports
+    addForwardedReport(tender);
+
+    // Show success message
+    alert(`Report "${report.title}" has been successfully forwarded to bidding and is now open for contractor bids!`);
+
+    // Close the dialog if it's open
+    // Note: We don't navigate to /bidding as the admin should stay on the reports page
+    // The bidding page can be accessed separately from the navigation
+
+    // Force a page reload to update the reports list (remove the forwarded report)
+    window.location.reload();
   };
 
   return (
@@ -174,11 +272,7 @@ const ReportsPage: React.FC = () => {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Button className="bg-[#2E6A56] hover:bg-[#1f4a3a] text-white">
-                <Plus className="w-4 h-4 mr-2" />
-                New Report
-              </Button>
-              <Button variant="outline">
+              <Button variant="outline" onClick={handleExportCSV}>
                 <Download className="w-4 h-4 mr-2" />
                 Export
               </Button>
@@ -247,9 +341,9 @@ const ReportsPage: React.FC = () => {
 
         {/* Filters and Search */}
         <Card className="p-6 mb-6 bg-white">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-1">
-              {/* Search */}
+          <div className="flex flex-col gap-6">
+            {/* Search and View Mode */}
+            <div className="flex items-center justify-between">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
@@ -261,9 +355,34 @@ const ReportsPage: React.FC = () => {
                 />
               </div>
 
+              {/* View Mode Toggle */}
+              <div className="flex items-center gap-2">
+                <Button
+                  variant={viewMode === "leaderboard" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setViewMode("leaderboard")}
+                  className="flex items-center gap-2"
+                >
+                  <TrendingUp className="w-4 h-4" />
+                  Normal
+                </Button>
+                <Button
+                  variant={viewMode === "grid" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="flex items-center gap-2"
+                >
+                  <LayoutGrid className="w-4 h-4" />
+                  Grid
+                </Button>
+              </div>
+            </div>
+
+            {/* Filters Grid - 2 rows */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
               {/* Status Filter */}
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -278,7 +397,7 @@ const ReportsPage: React.FC = () => {
 
               {/* Priority Filter */}
               <Select value={severityFilter} onValueChange={setSeverityFilter}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Filter by priority" />
                 </SelectTrigger>
                 <SelectContent>
@@ -289,37 +408,67 @@ const ReportsPage: React.FC = () => {
                   <SelectItem value="low">Low (0-44)</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
 
-            {/* View Mode Toggle */}
-            <div className="flex items-center gap-2">
-              <Button
-                variant={viewMode === "leaderboard" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setViewMode("leaderboard")}
-                className="flex items-center gap-2"
-              >
-                <TrendingUp className="w-4 h-4" />
-                Priority View
-              </Button>
-              <Button
-                variant={viewMode === "grid" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setViewMode("grid")}
-                className="flex items-center gap-2"
-              >
-                <LayoutGrid className="w-4 h-4" />
-                Grid
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setViewMode("list")}
-                className="flex items-center gap-2"
-              >
-                <List className="w-4 h-4" />
-                List
-              </Button>
+              {/* Department Filter */}
+              <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Filter by department" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Departments</SelectItem>
+                  <SelectItem value="Public Works">Public Works</SelectItem>
+                  <SelectItem value="Sanitation">Sanitation</SelectItem>
+                  <SelectItem value="Transportation">Transportation</SelectItem>
+                  <SelectItem value="Utilities">Utilities</SelectItem>
+                  <SelectItem value="Parks & Recreation">Parks & Recreation</SelectItem>
+                  <SelectItem value="Public Safety">Public Safety</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Ward Filter */}
+              <Select value={wardFilter} onValueChange={setWardFilter}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Filter by ward" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Wards</SelectItem>
+                  <SelectItem value="Ward 1">Ward 1</SelectItem>
+                  <SelectItem value="Ward 2">Ward 2</SelectItem>
+                  <SelectItem value="Ward 3">Ward 3</SelectItem>
+                  <SelectItem value="Ward 4">Ward 4</SelectItem>
+                  <SelectItem value="Ward 5">Ward 5</SelectItem>
+                  <SelectItem value="Ward 6">Ward 6</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Date Filter */}
+              <Select value={dateFilter} onValueChange={setDateFilter}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Filter by date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Time</SelectItem>
+                  <SelectItem value="today">Today</SelectItem>
+                  <SelectItem value="week">This Week</SelectItem>
+                  <SelectItem value="month">This Month</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Issue Type Filter */}
+              <Select value={issueTypeFilter} onValueChange={setIssueTypeFilter}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Filter by issue type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Issue Types</SelectItem>
+                  <SelectItem value="Pothole">Pothole</SelectItem>
+                  <SelectItem value="Street Light">Street Light</SelectItem>
+                  <SelectItem value="Garbage">Garbage</SelectItem>
+                  <SelectItem value="Water Leak">Water Leak</SelectItem>
+                  <SelectItem value="Traffic Signal">Traffic Signal</SelectItem>
+                  <SelectItem value="Drainage">Drainage</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </Card>
@@ -350,15 +499,7 @@ const ReportsPage: React.FC = () => {
                 {/* Leaderboard View */}
                 {viewMode === "leaderboard" && (
                   <div className="space-y-4">
-                    <div className="bg-gray-50 rounded-lg p-6 mb-6 border">
-                      <h2 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-2">
-                        <TrendingUp className="w-6 h-6 text-blue-600" />
-                        Priority Reports
-                      </h2>
-                      <p className="text-gray-600">
-                        Reports ordered by priority score - higher scores indicate urgent issues requiring immediate attention
-                      </p>
-                    </div>
+                    
                     
                     {paginatedReports.map((report, index) => {
                       const globalRank = startIndex + index + 1;
@@ -422,11 +563,39 @@ const ReportsPage: React.FC = () => {
                                 <div>
                                   <div className="text-xs font-medium text-gray-600">Priority Score</div>
                                   <div className={`text-2xl font-bold ${report.priorityLevel.color}`}>
-                                    {report.priorityScore}
+                                    {Number.isFinite(report.priorityScore) ? report.priorityScore : 0}
                                   </div>
                                 </div>
                               </div>
                             </div>
+                          </div>
+
+                          {/* Action Buttons */}
+                          <div className="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleReportView(report.id);
+                              }}
+                              className="flex items-center gap-2"
+                            >
+                              <Eye className="w-4 h-4" />
+                              View Details
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleForwardToBidding(report);
+                              }}
+                              className="flex items-center gap-2 text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"
+                            >
+                              <FileText className="w-4 h-4" />
+                              Forward to Bidding
+                            </Button>
                           </div>
                         </Card>
                       );
@@ -444,7 +613,7 @@ const ReportsPage: React.FC = () => {
                           onView={handleReportView}
                           onUpvote={handleReportUpvote}
                           onEdit={handleReportEdit}
-                          onConvertToTender={handleConvertToTender}
+                          onConvertToTender={handleForwardToBidding}
                         />
                         {/* Priority Score Overlay */}
                         <div className="absolute top-4 right-4">
@@ -454,7 +623,7 @@ const ReportsPage: React.FC = () => {
                               <div className="text-center">
                                 <div className="text-xs font-medium text-gray-600">Priority</div>
                                 <div className={`text-lg font-bold ${report.priorityLevel.color}`}>
-                                  {report.priorityScore}
+                                  {Number.isFinite(report.priorityScore) ? report.priorityScore : 0}
                                 </div>
                               </div>
                             </div>
@@ -504,29 +673,49 @@ const ReportsPage: React.FC = () => {
                 <MapPin className="w-5 h-5" />
                 Reports Map View
               </h3>
-              <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <MapPin className="w-12 h-12 mx-auto mb-2" />
-                  <p className="mb-2">Interactive map showing all {filteredReports.length} reports</p>
-                  <p className="text-sm">Reports are color-coded by priority level</p>
-                  <div className="flex items-center justify-center gap-6 mt-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 bg-red-600 rounded-full"></div>
-                      <span className="text-sm">Critical (80+)</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 bg-orange-600 rounded-full"></div>
-                      <span className="text-sm">High (65-79)</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 bg-yellow-600 rounded-full"></div>
-                      <span className="text-sm">Medium (45-64)</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 bg-green-600 rounded-full"></div>
-                      <span className="text-sm">Low (0-44)</span>
-                    </div>
-                  </div>
+              <div className="w-full h-96 rounded-lg overflow-hidden border">
+                <ReportsOverviewMap
+                  reports={filteredReports.map(report => ({
+                    id: report.id,
+                    issueType: report.issueType?.title || report.title,
+                    location: report.address || report.ward?.name || 'Unknown Location',
+                    coordinates: {
+                      lat: report.latitude || 28.6139,
+                      lng: report.longitude || 77.2090
+                    },
+                    status: report.status,
+                    urgency: report.priorityLevel?.level || 'Medium',
+                    citizen: report.reporter?.name || 'Unknown',
+                    description: report.description || '',
+                    created: new Date(report.createdAt).toLocaleDateString('en-IN'),
+                    zone: report.ward?.zone || 'Unknown Zone',
+                    ward: report.ward?.name || 'Unknown Ward'
+                  }))}
+                  onReportClick={(report) => {
+                    const originalReport = filteredReports.find(r => r.id === report.id);
+                    if (originalReport) {
+                      setSelectedReport(originalReport);
+                      setDialogOpen(true);
+                    }
+                  }}
+                />
+              </div>
+              <div className="flex items-center justify-center gap-6 mt-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-red-600 rounded-full"></div>
+                  <span className="text-sm">Critical (80+)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-orange-600 rounded-full"></div>
+                  <span className="text-sm">High (65-79)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-yellow-600 rounded-full"></div>
+                  <span className="text-sm">Medium (45-64)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-green-600 rounded-full"></div>
+                  <span className="text-sm">Low (0-44)</span>
                 </div>
               </div>
             </Card>

@@ -61,10 +61,7 @@ const DashboardCharts = () => {
   const topIssueTypes = [
     { type: 'Road Maintenance', count: 127, percentage: 28 },
     { type: 'Waste Management', count: 98, percentage: 22 },
-    { type: 'Street Lighting', count: 86, percentage: 19 },
-    { type: 'Water Supply', count: 72, percentage: 16 },
-    { type: 'Traffic Management', count: 43, percentage: 10 },
-    { type: 'Parks & Recreation', count: 23, percentage: 5 }
+    { type: 'Street Lighting', count: 86, percentage: 19 }
   ];
 
   const reportsByZone = [
@@ -84,7 +81,7 @@ const DashboardCharts = () => {
   const longestPendingReports = reports
     .filter(report => ['PENDING', 'IN_PROGRESS', 'ASSIGNED'].includes(report.status))
     .sort((a, b) => b.ageInDays - a.ageInDays)
-    .slice(0, 5);
+    .slice(0, 4);
 
   // Ward comparison data - enhanced
   const wardComparison = [
@@ -140,10 +137,7 @@ const DashboardCharts = () => {
   // Departmental efficiency data - enhanced
   const departmentalEfficiency = [
     { dept: 'Roads & Infrastructure', avgTime: 5.2, slaCompliance: 78 },
-    { dept: 'Sanitation & Waste', avgTime: 2.8, slaCompliance: 92 },
-    { dept: 'Electricity & Power', avgTime: 4.1, slaCompliance: 85 },
-    { dept: 'Water Supply', avgTime: 3.6, slaCompliance: 88 },
-    { dept: 'Parks & Recreation', avgTime: 4.8, slaCompliance: 81 }
+    { dept: 'Sanitation & Waste', avgTime: 2.8, slaCompliance: 92 }
   ];
 
   // Top 3 contractors - enhanced data
