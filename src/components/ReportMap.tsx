@@ -76,7 +76,7 @@ const ReportMap: React.FC<ReportMapProps> = ({ report, height = "300px" }) => {
         >
           <Popup>
             <div className="p-2 min-w-[250px]">
-              <h3 className="font-semibold text-lg mb-2">{report.issueType}</h3>
+              <h3 className="font-semibold text-lg mb-2">{String(report.issueType || 'Unknown Issue')}</h3>
               <div className="space-y-2 text-sm">
                 <div>
                   <strong>Report ID:</strong> {report.id}

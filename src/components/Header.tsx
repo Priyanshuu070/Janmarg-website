@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -45,7 +46,9 @@ const Header = () => {
             size="sm"
             className="bg-primary hover:bg-primary-hover text-primary-foreground"
           >
-            Get Started
+            <Link to="/dashboard" aria-label="Get started with CivicConnect">
+              Admin Login
+            </Link>
           </Button>
         </div>
       </div>

@@ -1,0 +1,16 @@
+citizen_id,name,email,phone,role,verified,trust_score,total_reports_submitted,resolved_reports,avg_rating_given,profile_image_url,created_at,primary_ward_id
+cit001,Rajesh Kumar,rajesh.kumar@email.com,+91-9876543210,CITIZEN,true,0.92,8,6,4.2,/placeholder.svg,2023-01-15T10:30:00Z,ward001
+cit002,Priya Sharma,priya.sharma@email.com,+91-9876543211,CITIZEN,true,0.87,5,4,4.5,/placeholder.svg,2023-02-20T14:20:00Z,ward002
+cit003,Anil Gupta,anil.gupta@email.com,+91-9876543212,CITIZEN,true,0.94,3,3,4.0,/placeholder.svg,2023-03-10T09:45:00Z,ward003
+cit004,Sunita Devi,sunita.devi@email.com,+91-9876543213,CITIZEN,true,0.89,4,3,4.3,/placeholder.svg,2023-01-28T11:15:00Z,ward004
+cit005,Deepak Singh,deepak.singh@email.com,+91-9876543214,CITIZEN,true,0.96,2,2,4.8,/placeholder.svg,2023-04-05T16:30:00Z,ward005
+cit006,Meera Jain,meera.jain@email.com,+91-9876543215,CITIZEN,true,0.85,6,4,3.9,/placeholder.svg,2023-02-12T08:20:00Z,ward006
+cit007,Vikram Yadav,vikram.yadav@email.com,+91-9876543216,CITIZEN,true,0.91,7,5,4.1,/placeholder.svg,2023-01-08T07:30:00Z,ward007
+cit008,Kavita Agarwal,kavita.agarwal@email.com,+91-9876543217,CITIZEN,true,0.88,4,3,4.4,/placeholder.svg,2023-03-22T19:15:00Z,ward008
+cit009,Rohit Verma,rohit.verma@email.com,+91-9876543218,CITIZEN,true,0.93,5,5,4.6,/placeholder.svg,2023-02-15T12:00:00Z,ward009
+cit010,Sanjay Kapoor,sanjay.kapoor@email.com,+91-9876543219,CITIZEN,true,0.79,3,1,3.2,/placeholder.svg,2023-04-01T10:45:00Z,ward010
+cit011,Ravi Patel,ravi.patel@email.com,+91-9876543220,CITIZEN,true,0.86,4,3,4.0,/placeholder.svg,2023-03-15T13:20:00Z,ward011
+cit012,Anita Mishra,anita.mishra@email.com,+91-9876543221,CITIZEN,true,0.90,6,5,4.3,/placeholder.svg,2023-01-25T15:45:00Z,ward012
+cit013,Suresh Yadav,suresh.yadav@email.com,+91-9876543222,CITIZEN,false,0.65,2,0,0.0,/placeholder.svg,2023-04-10T17:30:00Z,ward013
+cit014,Pooja Sharma,pooja.sharma@email.com,+91-9876543223,CITIZEN,true,0.92,5,4,4.5,/placeholder.svg,2023-02-28T09:15:00Z,ward014
+cit015,Amit Kumar,amit.kumar@email.com,+91-9876543224,CITIZEN,true,0.88,3,2,4.1,/placeholder.svg,2023-03-05T14:50:00Z,ward015
