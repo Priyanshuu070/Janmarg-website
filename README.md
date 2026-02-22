@@ -2,7 +2,7 @@
 
 **Administrative dashboard for managing civic infrastructure reports and government operations.**
 
-> 🏆 **Smart India Hackathon 2025** - Web platform developed for SIH 2025. Live demo at [janmarg.vercel.app](janmargwebsite.vercel.app)
+> 🏆 **Smart India Hackathon 2025** - Web platform developed for SIH 2025. Live demo at [janmargwebsite.vercel.app](https://janmargwebsite.vercel.app/)
 >
 > ⚠️ **Note**: This is a demo version with mock data for demonstration purposes.
 
